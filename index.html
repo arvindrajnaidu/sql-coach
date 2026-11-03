@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SQL Coach</title>
+  <meta name="description" content="Learn SQL step by step for product and program manager interviews. Runs entirely in your browser." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗄️</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <button id="menuBtn" class="icon-btn" aria-label="Show lessons">☰</button>
+    <div class="brand">SQL Coach</div>
+    <div class="progress-wrap" title="Lessons completed">
+      <div class="progress-bar"><div id="progressFill"></div></div>
+      <span id="progressText">0%</span>
+    </div>
+    <button id="sandboxBtn" class="ghost-btn">Sandbox</button>
+    <button id="cheatBtn" class="ghost-btn">Cheat sheet</button>
+  </header>
+
+  <div class="layout">
+    <nav id="sidebar" class="sidebar" aria-label="Lessons"></nav>
+
+    <main id="main" class="main">
+      <div id="loading" class="loading">Loading the database…</div>
+
+      <section id="lessonView" hidden>
+        <div class="crumb" id="crumb"></div>
+        <h1 id="lessonTitle"></h1>
+        <div id="explain" class="explain"></div>
+
+        <div class="task">
+          <div class="task-label">Your task</div>
+          <div id="taskText"></div>
+        </div>
+
+        <details class="schema" id="schemaBox">
+          <summary>Tables for this lesson</summary>
+          <div id="schema"></div>
+        </details>
+
+        <div class="editor-wrap">
+          <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="SQL editor"></textarea>
+          <div class="editor-actions">
+            <button id="runBtn" class="btn">Run <kbd>Ctrl ↵</kbd></button>
+            <button id="checkBtn" class="btn primary">Check answer</button>
+            <span class="spacer"></span>
+            <button id="hintBtn" class="ghost-btn">Hint</button>
+            <button id="expectedBtn" class="ghost-btn">Expected output</button>
+            <button id="resetBtn" class="ghost-btn">Reset</button>
+          </div>
+        </div>
+
+        <div id="feedback" class="feedback" hidden></div>
+        <div id="hints"></div>
+        <div id="expected" class="expected" hidden></div>
+        <div id="results" class="results"></div>
+
+        <div class="nav-row">
+          <button id="prevBtn" class="ghost-btn">← Previous</button>
+          <button id="nextBtn" class="btn">Next lesson →</button>
+        </div>
+      </section>
+
+      <section id="sandboxView" hidden>
+        <h1>Sandbox</h1>
+        <p class="muted">Write any query you like against the practice tables. Nothing here is graded, and the data resets every run.</p>
+        <details class="schema" open>
+          <summary>All tables</summary>
+          <div id="sandboxSchema"></div>
+        </details>
+        <div class="editor-wrap">
+          <textarea id="sandboxEditor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="SQL editor">SELECT * FROM users LIMIT 10;</textarea>
+          <div class="editor-actions">
+            <button id="sandboxRun" class="btn primary">Run <kbd>Ctrl ↵</kbd></button>
+          </div>
+        </div>
+        <div id="sandboxResults" class="results"></div>
+      </section>
+
+      <section id="cheatView" hidden>
+        <h1>Cheat sheet</h1>
+        <div class="cheat">
+<pre>-- Order of clauses
+SELECT   columns / aggregates
+FROM     table
+JOIN     other ON key = key
+WHERE    row filter
+GROUP BY columns
+HAVING   group filter
+ORDER BY columns [DESC]
+LIMIT    n;</pre>
+<pre>-- Filters
+= != &lt; &gt; &lt;= &gt;=
+AND  OR  NOT
+IN ('a','b')
+BETWEEN x AND y
+LIKE 'A%'   -- % any, _ one char
+IS NULL / IS NOT NULL</pre>
+<pre>-- Aggregates
+COUNT(*)  COUNT(col)  COUNT(DISTINCT col)
+SUM  AVG  MIN  MAX
+ROUND(x, 2)
+100.0 * a / b   -- avoid integer division</pre>
+<pre>-- Joins
+JOIN      only matches
+LEFT JOIN keep all left rows
+          (right side NULL if no match)
+-- anti-join: LEFT JOIN ... WHERE right.id IS NULL</pre>
+<pre>-- Conditional logic
+CASE WHEN x THEN 'a'
+     WHEN y THEN 'b'
+     ELSE 'c' END
+SUM(CASE WHEN cond THEN 1 ELSE 0 END)</pre>
+<pre>-- CTE and windows
+WITH t AS (SELECT ...)
+SELECT * FROM t;
+
+ROW_NUMBER() OVER (PARTITION BY g ORDER BY x DESC)
+RANK() / DENSE_RANK()
+SUM(x) OVER (ORDER BY d)  -- running total</pre>
+<pre>-- Dates (SQLite)
+strftime('%Y-%m', d)   -- '2024-03'
+date(d, '+7 days')
+-- Postgres: DATE_TRUNC('month', d)</pre>
+<pre>-- Interview tips
+1. Repeat the question, ask about
+   NULLs, duplicates, ties.
+2. Say the plan before typing.
+3. Build step by step, check
+   intermediate results.
+4. Sanity-check the final numbers.</pre>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="vendor/sql-wasm.js"></script>
+  <script src="data.js"></script>
+  <script src="lessons.js"></script>
+  <script src="check.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
