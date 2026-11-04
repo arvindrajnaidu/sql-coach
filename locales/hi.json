@@ -1,0 +1,656 @@
+{
+  "meta": {
+    "name": "हिन्दी",
+    "dir": "ltr"
+  },
+  "ui": {
+    "app.title": "SQL Coach",
+    "app.description": "प्रोडक्ट और प्रोग्राम मैनेजर इंटरव्यू के लिए SQL कदम-दर-कदम सीखें। सब कुछ आपके ब्राउज़र में चलता है।",
+    "app.loading": "डेटाबेस लोड हो रहा है…",
+    "app.dbError": "ब्राउज़र में डेटाबेस शुरू नहीं हो सका: {error}",
+    "top.menu": "पाठ दिखाएँ",
+    "top.progress": "पूरे हुए पाठ",
+    "top.sandbox": "सैंडबॉक्स",
+    "top.cheat": "चीट शीट",
+    "top.language": "भाषा",
+    "sidebar.unlockNote": "पिछला लेवल पूरा करने पर अगला लेवल खुलता है।",
+    "sidebar.unlockAll": "सब कुछ खोलें",
+    "sidebar.relock": "लेवल फिर से लॉक करें",
+    "sidebar.reset": "प्रगति रीसेट करें",
+    "sidebar.resetConfirm": "सारी प्रगति और सेव किए गए जवाब मिटा दें?",
+    "lesson.crumb": "लेवल {level} · {title} · {total} में से {n}",
+    "lesson.task": "आपका काम",
+    "lesson.tables": "इस पाठ की टेबल",
+    "lesson.editorLabel": "SQL एडिटर",
+    "lesson.run": "चलाएँ",
+    "lesson.check": "जवाब जाँचें",
+    "lesson.hint": "संकेत ({shown}/{total})",
+    "lesson.noMoreHints": "और संकेत नहीं",
+    "lesson.mockHintLocked": "मॉक इंटरव्यू में संकेत एक कोशिश के बाद खुलते हैं",
+    "lesson.expected": "अपेक्षित नतीजा",
+    "lesson.reset": "रीसेट",
+    "lesson.prev": "← पिछला",
+    "lesson.next": "अगला पाठ →",
+    "lesson.nextLocked": "अगला लेवल खोलने के लिए यह लेवल पूरा करें",
+    "lesson.alreadySolved": "✓ आप यह पहले ही हल कर चुकी हैं। चाहें तो फिर से कोशिश करें।",
+    "lesson.writeFirst": "पहले एक क्वेरी लिखें।",
+    "lesson.queryError": "आपकी क्वेरी में गलती है। नीचे का संदेश पढ़ें। अक्सर टाइपो या छूटा हुआ कॉमा वजह होता है।",
+    "lesson.correct": "✓ सही! बहुत बढ़िया।",
+    "lesson.levelDone": "🎉 सही, और इसके साथ <b>{level}</b> पूरा हुआ! लेवल {next} खुल गया है।",
+    "lesson.allDone": "🏆 सही! आपने मॉक इंटरव्यू पूरा कर लिया। आप तैयार हैं। शुभकामनाएँ!",
+    "lesson.notQuite": "पूरी तरह सही नहीं।",
+    "lesson.tryHint": "अटक गई हों तो संकेत देखें।",
+    "lesson.hintLabel": "संकेत {n}:",
+    "lesson.solutionLabel": "हल:",
+    "lesson.expectedOrdered": "अपेक्षित नतीजा (क्रम मायने रखता है)",
+    "lesson.expectedUnordered": "अपेक्षित नतीजा (रो का क्रम कुछ भी हो सकता है)",
+    "lesson.solutionFailed": "पाठ का हल नहीं चला: {error}",
+    "check.noTable": "आपकी क्वेरी ने कोई टेबल नहीं लौटाई। पक्का करें कि यह SELECT है।",
+    "check.columns_one": "{expected} कॉलम चाहिए था, लेकिन आपके नतीजे में {actual} हैं।",
+    "check.columns_other": "{expected} कॉलम चाहिए थे, लेकिन आपके नतीजे में {actual} हैं।",
+    "check.rows_one": "{expected} रो चाहिए थी, लेकिन आपके नतीजे में {actual} हैं।",
+    "check.rows_other": "{expected} रो चाहिए थीं, लेकिन आपके नतीजे में {actual} हैं।",
+    "check.order": "रो सही हैं, लेकिन क्रम गलत है। अपना ORDER BY जाँचें।",
+    "check.columnOrder": "वैल्यू सही हैं, लेकिन कॉलम उस क्रम में नहीं हैं जो काम में माँगा गया है।",
+    "check.values": "रो और कॉलम की गिनती सही है, लेकिन कुछ वैल्यू अलग हैं।",
+    "results.ranNoRows": "क्वेरी चली। दिखाने के लिए कोई रो नहीं।",
+    "results.rows_one": "{n} रो",
+    "results.rows_other": "{n} रो",
+    "results.truncated": "(पहली {n} दिखा रहे हैं)",
+    "schema.rows": "({n} रो)",
+    "schema.preview": "झलक",
+    "schema.previewOf": "<b>{table}</b> की झलक (पहली 10 रो)",
+    "quiz.learn": "सीखें",
+    "quiz.tapTag": "छोटा क्विज़ · टैप करें",
+    "quiz.choiceTag": "छोटा क्विज़",
+    "quiz.tapPrompt": "ऊपर अपने जवाब पर टैप करें",
+    "quiz.choicePrompt": "एक जवाब चुनें",
+    "quiz.correct": "सही!",
+    "quiz.notQuite": "पूरी तरह सही नहीं।",
+    "quiz.comeBack": "हम इस पर बाद में फिर आएँगे।",
+    "quiz.continue": "आगे बढ़ें",
+    "quiz.gotIt": "समझ गई",
+    "quiz.keysLegend": "🔑 प्राइमरी की · 🔗 फ़ॉरेन की (users.user_id की ओर इशारा करती है)",
+    "quiz.lessonDone": "पाठ पूरा!",
+    "quiz.basicsDone": "बुनियादी बातें पूरी!",
+    "quiz.perfect": "एकदम सही, कोई गलती नहीं!",
+    "quiz.mistakes_one": "आपने रास्ते में {n} गलती सुधारी। सीखना ऐसे ही होता है।",
+    "quiz.mistakes_other": "आपने रास्ते में {n} गलतियाँ सुधारीं। सीखना ऐसे ही होता है।",
+    "quiz.basicsNext": "अब आप शब्द जानती हैं। आगे आप अपनी पहली असली SQL क्वेरी लिखेंगी।",
+    "quiz.nextLesson": "अगला पाठ",
+    "quiz.startSql": "SQL लिखना शुरू करें →",
+    "sandbox.title": "सैंडबॉक्स",
+    "sandbox.intro": "प्रैक्टिस टेबल पर जो चाहें क्वेरी लिखें। यहाँ कोई जाँच नहीं होती, और हर बार डेटा रीसेट हो जाता है।",
+    "sandbox.allTables": "सभी टेबल",
+    "cheat.title": "चीट शीट"
+  },
+  "cheat": [
+    "-- क्लॉज़ का क्रम\nSELECT   कॉलम / एग्रीगेट\nFROM     टेबल\nJOIN     दूसरी ON key = key\nWHERE    रो फ़िल्टर\nGROUP BY कॉलम\nHAVING   ग्रुप फ़िल्टर\nORDER BY कॉलम [DESC]\nLIMIT    n;",
+    "-- फ़िल्टर\n= != < > <= >=\nAND  OR  NOT\nIN ('a','b')\nBETWEEN x AND y\nLIKE 'A%'   -- % कुछ भी, _ एक अक्षर\nIS NULL / IS NOT NULL",
+    "-- एग्रीगेट\nCOUNT(*)  COUNT(col)  COUNT(DISTINCT col)\nSUM  AVG  MIN  MAX\nROUND(x, 2)\n100.0 * a / b   -- पूर्णांक भाग से बचें",
+    "-- जॉइन\nJOIN      सिर्फ़ मेल खाने वाली रो\nLEFT JOIN बाईं टेबल की सभी रो\n          (मेल न हो तो दाईं ओर NULL)\n-- anti-join: LEFT JOIN ... WHERE right.id IS NULL",
+    "-- शर्त वाला लॉजिक\nCASE WHEN x THEN 'a'\n     WHEN y THEN 'b'\n     ELSE 'c' END\nSUM(CASE WHEN cond THEN 1 ELSE 0 END)",
+    "-- CTE और विंडो\nWITH t AS (SELECT ...)\nSELECT * FROM t;\n\nROW_NUMBER() OVER (PARTITION BY g ORDER BY x DESC)\nRANK() / DENSE_RANK()\nSUM(x) OVER (ORDER BY d)  -- चलता हुआ जोड़",
+    "-- तारीखें (SQLite)\nstrftime('%Y-%m', d)   -- '2024-03'\ndate(d, '+7 days')\n-- Postgres: DATE_TRUNC('month', d)",
+    "-- इंटरव्यू टिप्स\n1. सवाल दोहराएँ, पूछें:\n   NULL, डुप्लिकेट, टाई?\n2. टाइप करने से पहले प्लान बताएँ।\n3. कदम-दर-कदम बनाएँ, बीच के\n   नतीजे जाँचें।\n4. आखिरी नंबरों को परखें।"
+  ],
+  "levels": {
+    "intro": {
+      "title": "डेटाबेस की बुनियाद",
+      "blurb": "टेबल, रो, कॉलम और की: एक चित्रों वाला वॉर्म-अप क्विज़।"
+    },
+    "basics": {
+      "title": "SELECT और WHERE",
+      "blurb": "टेबल से डेटा पढ़ें और उसे फ़िल्टर करें।"
+    },
+    "sorting": {
+      "title": "नतीजों को क्रम और आकार देना",
+      "blurb": "ORDER BY, LIMIT, DISTINCT और गणना वाले कॉलम।"
+    },
+    "aggregates": {
+      "title": "एग्रीगेट और GROUP BY",
+      "blurb": "गिनना, जोड़ना और ग्रुप बनाना: PM मेट्रिक्स का दिल।"
+    },
+    "joins": {
+      "title": "JOIN",
+      "blurb": "टेबल को जोड़ना, इंटरव्यू का सबसे आम विषय।"
+    },
+    "subqueries": {
+      "title": "सबक्वेरी, CASE और तारीखें",
+      "blurb": "क्वेरी के अंदर क्वेरी, if/else लॉजिक, और तारीखों के साथ काम।"
+    },
+    "patterns": {
+      "title": "इंटरव्यू पैटर्न",
+      "blurb": "वे सवाल जो PM इंटरव्यू में सच में पूछे जाते हैं।"
+    },
+    "mock": {
+      "title": "मॉक इंटरव्यू",
+      "blurb": "कोई समझाइश नहीं, गलत कोशिश के बाद संकेत खुलते हैं। अपनी सोच ज़ोर से बोलें!"
+    }
+  },
+  "lessons": {
+    "intro-tables": {
+      "title": "डेटाबेस क्या है?",
+      "steps": [
+        {
+          "html": "<p>👋 स्वागत है! कोड लिखने से पहले, वे शब्द सीखते हैं जो लोग इस्तेमाल करते हैं।</p>\n<p><b>डेटाबेस</b> वह जगह है जहाँ कंपनी अपना डेटा रखती है, इस तरह सजाकर कि चीज़ें आसानी से मिल जाएँ। इसे बहुत साफ़-सुथरी स्प्रेडशीट्स का संग्रह समझें।</p>\n<p>हर “स्प्रेडशीट” को <b>टेबल</b> कहते हैं। किसी प्रोडक्ट में यूज़र्स की एक टेबल, ऑर्डर्स की एक टेबल, और फ़ीचर इस्तेमाल की एक टेबल हो सकती है।</p>"
+        },
+        {
+          "prompt": "आपकी मैनेजर पूछती हैं: <b>पिछले हफ़्ते हमने कितना पैसा कमाया?</b> वह टेबल टैप करें जिसमें आप देखेंगी।",
+          "right": "हाँ! पैसा खरीदारी से आता है, और खरीदारी <code>orders</code> में रहती है।",
+          "wrong": "यह नहीं। कौन सी टेबल लोगों की खरीदी चीज़ों के बारे में है?"
+        },
+        {
+          "prompt": "अब: <b>लोग कौन से फ़ीचर सबसे ज़्यादा इस्तेमाल कर रहे हैं?</b> टेबल टैप करें।",
+          "right": "बिल्कुल। <code>feature_usage</code> हर बार दर्ज करती है जब कोई फ़ीचर इस्तेमाल होता है।",
+          "wrong": "वह टेबल ढूँढें जो फ़ीचर्स के बारे में है।"
+        },
+        {
+          "prompt": "<b>टेबल</b> सबसे ज़्यादा किसकी तरह है…",
+          "options": [
+            "एक अकेला नंबर",
+            "रो और कॉलम वाली एक स्प्रेडशीट",
+            "एक चार्ट",
+            "एक प्रोग्रामिंग भाषा"
+          ],
+          "right": "सही। टेबल काफ़ी हद तक स्प्रेडशीट के टैब जैसी दिखती और लगती हैं।"
+        }
+      ]
+    },
+    "intro-rows-cols": {
+      "title": "रो, कॉलम और सेल",
+      "steps": [
+        {
+          "html": "<p>यह रही <code>users</code> टेबल, पास से।</p>\n<p><b>रो</b> (row, जिसे <i>रिकॉर्ड</i> भी कहते हैं) <b>एक चीज़</b> होती है। यहाँ हर रो एक व्यक्ति है। हाइलाइट की गई रो में Ben के बारे में हमारी सारी जानकारी है।</p>",
+          "label": "← एक रो = एक यूज़र"
+        },
+        {
+          "prompt": "<b>Priya की रो</b> पर कहीं भी टैप करें।",
+          "right": "बढ़िया। वह पूरी लाइन Priya का रिकॉर्ड है।",
+          "wrong": "वह लाइन ढूँढें जहाँ नाम Priya है।"
+        },
+        {
+          "html": "<p><b>कॉलम</b> (column, जिसे <i>फ़ील्ड</i> भी कहते हैं) <b>एक तरह की जानकारी</b> है, जो हर रो के लिए होती है। हाइलाइट किया गया कॉलम <code>country</code> है।</p>\n<p>ऊपर के बोल्ड नाम <b>कॉलम के नाम</b> हैं। ये आप अपनी क्वेरी में टाइप करेंगी।</p>"
+        },
+        {
+          "prompt": "<b>plan</b> कॉलम पर टैप करें।",
+          "right": "हाँ। हर यूज़र का एक प्लान है, इसलिए यह कॉलम है।",
+          "wrong": "ऊपर के नाम देखें। कौन सा plan कहता है?"
+        },
+        {
+          "html": "<p>जहाँ एक रो और एक कॉलम मिलते हैं, वहाँ <b>सेल</b> बनता है: एक अकेली वैल्यू। यह सेल <i>Aisha का देश</i> है।</p>"
+        },
+        {
+          "prompt": "वह सेल टैप करें जो <b>Ben की साइनअप तारीख</b> दिखाता है।",
+          "right": "एकदम सही: Ben की रो, signup_date कॉलम।",
+          "wrong": "पहले Ben की रो ढूँढें, फिर signup_date तक जाएँ।"
+        },
+        {
+          "prompt": "<code>users</code> टेबल में <b>एक रो</b> किसे दर्शाती है?",
+          "options": [
+            "एक देश",
+            "एक यूज़र",
+            "एक प्लान",
+            "एक कॉलम"
+          ],
+          "right": "बिल्कुल। एक रो, एक यूज़र। <code>orders</code> में एक रो एक ऑर्डर है।"
+        },
+        {
+          "prompt": "इस <code>users</code> टेबल में कितने <b>कॉलम</b> हैं?",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "20"
+          ],
+          "right": "हाँ: user_id, name, country, plan, signup_date।"
+        }
+      ]
+    },
+    "intro-types-null": {
+      "title": "डेटा टाइप और खाली वैल्यू",
+      "steps": [
+        {
+          "html": "<p>हर कॉलम में एक ही <b>टाइप</b> का डेटा होता है:</p>\n<ul><li><b>number</b> (नंबर): 42, 19.99</li><li><b>text</b> (टेक्स्ट): 'Ben', 'pro' (SQL में टेक्स्ट 'सिंगल कोट्स' में लिखा जाता है)</li><li><b>date</b> (तारीख): '2024-02-11' (साल-महीना-दिन)</li></ul>\n<p>हर कॉलम के नाम के नीचे छोटे ग्रे लेबल उसका टाइप बताते हैं।</p>"
+        },
+        {
+          "prompt": "<code>orders</code> के <code>amount</code> कॉलम में किस टाइप का डेटा है?",
+          "options": [
+            "text",
+            "number",
+            "date"
+          ],
+          "right": "सही, रकम नंबर होती है, इसलिए हम उन्हें जोड़ सकते हैं।"
+        },
+        {
+          "html": "<p>कभी-कभी कोई वैल्यू <b>नहीं होती</b>। डेटाबेस इसे <b>NULL</b> कहते हैं। इसका मतलब है “पता नहीं” या “भरा नहीं गया”, जो शून्य या खाली शब्द से अलग है।</p>\n<p>Chen ने हमें अपना देश नहीं बताया, इसलिए वह सेल NULL है।</p>"
+        },
+        {
+          "prompt": "<b>NULL</b> (गायब) वैल्यू पर टैप करें।",
+          "right": "समझ गईं। इंटरव्यू में अक्सर पूछा जाता है कि आप NULL को कैसे संभालेंगी!",
+          "wrong": "वह सेल ढूँढें जिसमें ग्रे रंग में NULL लिखा है।"
+        },
+        {
+          "prompt": "NULL का मतलब है…",
+          "options": [
+            "नंबर शून्य",
+            "वैल्यू गायब / अज्ञात है",
+            "डेटाबेस में कोई गलती",
+            "शब्द 'null'"
+          ],
+          "right": "हाँ। NULL का मतलब “हमें नहीं पता” है, शून्य नहीं।"
+        }
+      ]
+    },
+    "intro-keys": {
+      "title": "की (Keys): टेबल कैसे जुड़ती हैं",
+      "steps": [
+        {
+          "html": "<p>हर टेबल में एक कॉलम होता है जो हर रो को एक <b>यूनिक ID</b> देता है, पासपोर्ट नंबर की तरह। इसे <b>प्राइमरी की</b> (primary key) कहते हैं।</p>\n<p><code>users</code> में यह <code>user_id</code> है। दो यूज़र्स की कभी एक ही ID नहीं होती।</p>"
+        },
+        {
+          "prompt": "<code>orders</code> के <b>प्राइमरी की</b> कॉलम पर टैप करें।",
+          "right": "हाँ, <code>order_id</code> हर ऑर्डर को अलग पहचान देता है।",
+          "wrong": "प्राइमरी की हर ऑर्डर की यूनिक ID है। वह कौन सा कॉलम है?"
+        },
+        {
+          "html": "<p>हमें कैसे पता चले कि ऑर्डर <b>किसने</b> दिया? <code>orders</code> टेबल में एक <code>user_id</code> कॉलम है जो <code>users</code> की एक रो की <b>ओर इशारा करता है</b>।</p>\n<p>जो कॉलम किसी दूसरी टेबल की प्राइमरी की की ओर इशारा करे, उसे <b>फ़ॉरेन की</b> (foreign key) कहते हैं। यह टेबलों के बीच का पुल है। ऑर्डर 101 का user_id <b>2</b> है, तो वह Ben था।</p>"
+        },
+        {
+          "prompt": "ऑर्डर <b>102</b>: इसे किसने खरीदा? <code>users</code> में उस व्यक्ति की रो टैप करें।",
+          "right": "सही! ऑर्डर 102 का user_id 4 है, यानी Priya। टेबलों को ऐसे जोड़ने को <b>JOIN</b> कहते हैं। यह आप बाद में सीखेंगी।",
+          "wrong": "ऑर्डर 102 का user_id ढूँढें, फिर उस ID वाला यूज़र ढूँढें।"
+        },
+        {
+          "prompt": "Ben (user_id 2) के कितने ऑर्डर हैं?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "right": "हाँ, ऑर्डर 101 और 103 दोनों का user_id 2 है।"
+        }
+      ]
+    },
+    "intro-schema": {
+      "title": "स्कीमा: नक्शा",
+      "steps": [
+        {
+          "html": "<p><b>स्कीमा</b> (schema) डेटाबेस का ब्लूप्रिंट है: कौन सी टेबल हैं, उनमें कौन से कॉलम हैं, उनके टाइप, और वे कैसे जुड़ी हैं। इसमें असली डेटा नहीं दिखता, सिर्फ़ ढाँचा।</p>\n<p>इंटरव्यू में अक्सर ऐसा स्कीमा दिखाकर क्वेरी लिखने को कहा जाता है। इसे आराम से पढ़ लेना आधी जीत है।</p>"
+        },
+        {
+          "prompt": "स्कीमा में वह कॉलम टैप करें जो बताता है कि <b>कौन सा फ़ीचर</b> इस्तेमाल हुआ।",
+          "right": "हाँ, <code>feature_usage.feature</code>। लोग अक्सर table.column ऐसे ही लिखते हैं।",
+          "wrong": "feature_usage वाले बॉक्स के अंदर देखें।"
+        },
+        {
+          "prompt": "<code>feature_usage</code> में वह कॉलम टैप करें जो <b>users से वापस जोड़ता है</b>।",
+          "right": "बिल्कुल: <code>user_id</code> वापस <code>users</code> की फ़ॉरेन की है।",
+          "wrong": "किस कॉलम का नाम users की प्राइमरी की जैसा है?"
+        },
+        {
+          "prompt": "स्कीमा दिखाता है…",
+          "options": [
+            "डेटा की हर रो",
+            "ढाँचा: टेबल, कॉलम, टाइप और जुड़ाव",
+            "डेटा के चार्ट",
+            "सिर्फ़ प्राइमरी की"
+          ],
+          "right": "सही। स्कीमा नक्शा है, ज़मीन नहीं।"
+        }
+      ]
+    },
+    "intro-sql": {
+      "title": "मिलिए SQL से",
+      "steps": [
+        {
+          "html": "<p><b>SQL</b> (“सीक्वल” या “एस-क्यू-एल” बोलें) डेटाबेस से सवाल पूछने का तरीका है। यह लगभग अंग्रेज़ी जैसा पढ़ा जाता है:</p>\n<p>“हर यूज़र का <b>name</b> दिखाओ” बन जाता है:</p>\n<pre>SELECT name FROM users;</pre>\n<p><code>SELECT</code> बताता है <b>कौन से कॉलम</b> चाहिए। <code>FROM</code> बताता है <b>कौन सी टेबल</b>। जवाब एक नई छोटी टेबल के रूप में आता है।</p>"
+        },
+        {
+          "prompt": "इस क्वेरी में <b>टेबल का नाम</b> टैप करें।",
+          "right": "हाँ! टेबल FROM के ठीक बाद आती है।",
+          "wrong": "टेबल का नाम FROM शब्द के बाद आता है।"
+        },
+        {
+          "prompt": "वह शब्द टैप करें जो बताता है कि <b>किस टेबल</b> में देखना है। यह हमेशा टेबल के नाम से ठीक पहले आता है।",
+          "right": "सही, FROM। SELECT कॉलम चुनता है, FROM टेबल चुनता है।",
+          "wrong": "SELECT कॉलम चुनता है। कौन सा कीवर्ड टेबल चुनता है?"
+        },
+        {
+          "prompt": "कौन सी क्वेरी हर यूज़र का <b>country</b> दिखाती है?",
+          "options": [
+            "SELECT users FROM country;",
+            "SELECT country FROM users;",
+            "FROM users SELECT country;",
+            "SHOW country IN users;"
+          ],
+          "right": "एकदम सही: कॉलम को SELECT करें, टेबल से FROM। 🎉 अब आप बुनियादी बातें जानती हैं। आगे: असली क्वेरी लिखना!"
+        }
+      ]
+    },
+    "select-all": {
+      "title": "आपकी पहली क्वेरी",
+      "explain": "<p>डेटाबेस <b>टेबलों</b> का समूह है। हर टेबल में <b>कॉलम</b> (फ़ील्ड) और <b>रो</b> (रिकॉर्ड) होते हैं। <code>users</code> टेबल में हमारे प्रोडक्ट पर साइन अप करने वाले हर व्यक्ति की एक रो है।</p>\n<p>डेटा पढ़ने के लिए आप <code>SELECT</code> स्टेटमेंट लिखती हैं। <code>*</code> का मतलब है “हर कॉलम”।</p>\n<pre>SELECT * FROM users;</pre>\n<p>SQL कीवर्ड छोटे-बड़े अक्षरों में फ़र्क नहीं करते, पर उन्हें CAPITALS में लिखने से क्वेरी पढ़ना आसान होता है। आखिर का सेमीकोलन यहाँ ज़रूरी नहीं।</p>",
+      "task": "<code>users</code> टेबल का हर कॉलम और हर रो दिखाएँ।",
+      "hints": [
+        "सभी कॉलम के लिए <code>*</code> इस्तेमाल करें।",
+        "<code>SELECT * FROM users;</code>"
+      ]
+    },
+    "select-cols": {
+      "title": "कॉलम चुनना",
+      "explain": "<p>आमतौर पर आपको कुछ ही कॉलम चाहिए होते हैं। उन्हें <code>SELECT</code> के बाद कॉमा लगाकर, उसी क्रम में लिखें जिसमें आप उन्हें देखना चाहती हैं।</p>\n<pre>SELECT name, plan FROM users;</pre>",
+      "task": "हर यूज़र का <code>name</code> और <code>country</code> दिखाएँ।",
+      "hints": [
+        "दोनों कॉलम के नाम कॉमा लगाकर लिखें।",
+        "<code>SELECT name, country FROM users;</code>"
+      ]
+    },
+    "where": {
+      "title": "WHERE से फ़िल्टर करना",
+      "explain": "<p><code>WHERE</code> सिर्फ़ वे रो रखता है जो किसी शर्त से मेल खाती हैं। टेक्स्ट वैल्यू <b>सिंगल कोट्स</b> में लिखी जाती हैं।</p>\n<pre>SELECT name FROM users WHERE country = 'India';</pre>\n<p>तुलना के ऑपरेटर: <code>=</code>, <code>!=</code> (या <code>&lt;&gt;</code>), <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>। <code>'YYYY-MM-DD'</code> टेक्स्ट में रखी तारीखें भी इनसे सही तुलना होती हैं।</p>",
+      "task": "<code>'pro'</code> प्लान वाले हर यूज़र का <code>name</code> और <code>signup_date</code> दिखाएँ।",
+      "hints": [
+        "शर्त <code>WHERE</code> के बाद आती है, और यह <code>plan</code> कॉलम की तुलना करती है।",
+        "<code>WHERE plan = 'pro'</code>"
+      ]
+    },
+    "and-or": {
+      "title": "AND, OR",
+      "explain": "<p>शर्तों को <code>AND</code> (दोनों सच हों) और <code>OR</code> (कोई एक सच हो) से जोड़ें। दोनों को मिलाएँ तो ब्रैकेट लगाएँ, ताकि साफ़ रहे कि क्या साथ है।</p>\n<pre>SELECT name FROM users\nWHERE plan = 'free' AND (country = 'UK' OR country = 'Germany');</pre>",
+      "task": "उन यूज़र्स का <code>name</code> दिखाएँ जो <code>'pro'</code> या <code>'enterprise'</code> प्लान पर हैं <b>और</b> <code>'US'</code> से हैं।",
+      "hints": [
+        "आपको एक <code>AND</code> और एक <code>OR</code> चाहिए। ब्रैकेट कहाँ लगेंगे?",
+        "<code>WHERE country = 'US' AND (plan = 'pro' OR plan = 'enterprise')</code>"
+      ]
+    },
+    "in-between-like": {
+      "title": "IN, BETWEEN, LIKE",
+      "explain": "<p>तीन शॉर्टकट जो बार-बार काम आते हैं:</p>\n<ul>\n<li><code>country IN ('UK', 'Germany')</code> दो OR के बराबर है।</li>\n<li><code>signup_date BETWEEN '2024-02-01' AND '2024-02-29'</code> में दोनों सिरे शामिल होते हैं।</li>\n<li><code>name LIKE 'A%'</code> टेक्स्ट पैटर्न से मिलाता है। <code>%</code> का मतलब “कोई भी अक्षर”, <code>_</code> का मतलब “ठीक एक अक्षर”।</li>\n</ul>",
+      "task": "उन यूज़र्स का <code>name</code> और <code>signup_date</code> दिखाएँ जिन्होंने <b>मार्च 2024</b> में साइन अप किया (<code>'2024-03-01'</code> से <code>'2024-03-31'</code> तक)।",
+      "hints": [
+        "तारीख की रेंज के लिए <code>BETWEEN ... AND ...</code> एकदम सही है।",
+        "<code>WHERE signup_date BETWEEN '2024-03-01' AND '2024-03-31'</code>"
+      ]
+    },
+    "null": {
+      "title": "गायब वैल्यू (NULL)",
+      "explain": "<p><code>NULL</code> का मतलब है “कोई वैल्यू नहीं / अज्ञात”। यह किसी के बराबर नहीं होता, दूसरे NULL के भी नहीं, इसलिए <code>country = NULL</code> कभी मेल नहीं खाता।</p>\n<p>इसकी जगह <code>IS NULL</code> और <code>IS NOT NULL</code> इस्तेमाल करें:</p>\n<pre>SELECT name FROM users WHERE country IS NOT NULL;</pre>\n<p>इंटरव्यू में यह खूब पूछा जाता है, क्योंकि इसे भूलने से चुपचाप गलत जवाब आते हैं।</p>",
+      "task": "उन यूज़र्स का <code>user_id</code> और <code>name</code> ढूँढें जिनका <code>country</code> गायब है।",
+      "hints": [
+        "<code>= NULL</code> काम नहीं करेगा। इसके लिए एक खास ऑपरेटर है।",
+        "<code>WHERE country IS NULL</code>"
+      ]
+    },
+    "order-by": {
+      "title": "ORDER BY",
+      "explain": "<p>जब तक आप न कहें, रो किसी तय क्रम में नहीं आतीं। <code>ORDER BY</code> उन्हें क्रम में लगाता है। <code>ASC</code> (छोटे से बड़ा) डिफ़ॉल्ट है, <code>DESC</code> बड़े से छोटा।</p>\n<pre>SELECT name, signup_date FROM users ORDER BY signup_date DESC;</pre>\n<p>आप कई कॉलम से क्रम लगा सकती हैं: <code>ORDER BY country, name</code> पहले देश से, फिर हर देश के अंदर नाम से।</p>",
+      "task": "सभी यूज़र्स का <code>name</code> और <code>signup_date</code> दिखाएँ, <b>सबसे पहले साइन अप करने वाला पहले</b>। अगर दो यूज़र्स ने एक ही दिन साइन अप किया, तो उन्हें <code>name</code> से क्रम दें।",
+      "hints": [
+        "<code>ORDER BY</code> आखिर में आता है। आपको दो कॉलम से क्रम लगाना है।",
+        "<code>ORDER BY signup_date, name</code>"
+      ]
+    },
+    "limit": {
+      "title": "LIMIT से टॉप N",
+      "explain": "<p><code>LIMIT n</code> सिर्फ़ पहली <i>n</i> रो रखता है। <code>ORDER BY ... DESC</code> के साथ यह “टॉप N” सवालों का जवाब देता है:</p>\n<pre>SELECT * FROM orders ORDER BY order_date DESC LIMIT 3;  -- 3 सबसे नए ऑर्डर</pre>\n<p>क्रम मायने रखता है: SQL पहले सॉर्ट करता है, फिर लिमिट लगाता है।</p>",
+      "task": "<b>5 सबसे नए</b> ऑर्डर का <code>order_id</code>, <code>order_date</code> और <code>amount</code> दिखाएँ। बराबरी हो तो <code>order_id</code> से (सबसे बड़ा पहले)।",
+      "hints": [
+        "सबसे नया पहले सॉर्ट करें, फिर सूची काटें।",
+        "<code>ORDER BY order_date DESC, order_id DESC LIMIT 5</code>"
+      ]
+    },
+    "distinct": {
+      "title": "DISTINCT",
+      "explain": "<p><code>SELECT DISTINCT</code> नतीजे से दोहराई गई रो हटा देता है।</p>\n<pre>SELECT DISTINCT country FROM users;</pre>\n<p>कई कॉलम हों तो यह वे रो हटाता है जिनके <i>सभी</i> लिखे कॉलम एक जैसे हों।</p>",
+      "task": "<code>feature_usage</code> में आने वाला हर <b>अलग</b> <code>feature</code> एक-एक बार दिखाएँ।",
+      "hints": [
+        "<code>DISTINCT</code> को <code>SELECT</code> के ठीक बाद लिखें।",
+        "<code>SELECT DISTINCT feature FROM feature_usage;</code>"
+      ]
+    },
+    "alias-calc": {
+      "title": "गणना और उपनाम (alias)",
+      "explain": "<p>आप <code>+ - * /</code> से नए कॉलम बना सकती हैं, और <code>AS</code> से उन्हें नाम दे सकती हैं:</p>\n<pre>SELECT order_id, amount, amount * 0.2 AS platform_fee FROM orders;</pre>\n<p><code>ROUND(x, 2)</code> दो दशमलव तक गोल करता है। ध्यान दें: SQLite में दो पूर्णांकों का भाग पूर्णांक देता है (<code>7 / 2 = 3</code>)। दशमलव पाने के लिए <code>1.0</code> से गुणा करें (<code>7 * 1.0 / 2 = 3.5</code>)।</p>",
+      "task": "हर <code>'refunded'</code> ऑर्डर के लिए <code>order_id</code>, <code>amount</code>, और एक कॉलम <code>amount_cents</code> दिखाएँ जिसमें रकम सेंट में हो (amount × 100)।",
+      "hints": [
+        "<code>amount</code> कॉलम को गुणा करें और <code>AS</code> से नाम दें।",
+        "<code>SELECT order_id, amount, amount * 100 AS amount_cents FROM orders WHERE status = 'refunded';</code>"
+      ]
+    },
+    "count": {
+      "title": "COUNT",
+      "explain": "<p>एग्रीगेट फ़ंक्शन कई रो को एक वैल्यू में समेट देते हैं।</p>\n<ul>\n<li><code>COUNT(*)</code> रो गिनता है।</li>\n<li><code>COUNT(column)</code> वे रो गिनता है जहाँ वह कॉलम <b>NULL नहीं</b> है।</li>\n<li><code>COUNT(DISTINCT column)</code> अलग-अलग non-NULL वैल्यू गिनता है।</li>\n</ul>\n<pre>SELECT COUNT(*) AS total_users FROM users;</pre>",
+      "task": "<code>'free'</code> प्लान पर कितने यूज़र्स हैं? एक नंबर लौटाएँ।",
+      "hints": [
+        "पहले <code>WHERE</code> से फ़िल्टर करें, फिर गिनें।",
+        "<code>SELECT COUNT(*) FROM users WHERE plan = 'free';</code>"
+      ]
+    },
+    "sum-avg": {
+      "title": "SUM, AVG, MIN, MAX",
+      "explain": "<p><code>SUM</code>, <code>AVG</code>, <code>MIN</code> और <code>MAX</code> नंबर वाले कॉलम पर काम करते हैं (MIN/MAX तारीख और टेक्स्ट पर भी)। एक क्वेरी में कई इस्तेमाल कर सकती हैं:</p>\n<pre>SELECT MIN(amount), MAX(amount), AVG(amount) FROM orders;</pre>\n<p>रेवेन्यू के सवालों में लगभग हमेशा फ़िल्टर चाहिए, क्योंकि refunded या pending ऑर्डर आमतौर पर नहीं गिने जाते।</p>",
+      "task": "सिर्फ़ <code>'completed'</code> ऑर्डर के लिए दो नंबर लौटाएँ: कुल रेवेन्यू (amount का <code>SUM</code>) और औसत ऑर्डर वैल्यू (amount का <code>AVG</code>)।",
+      "hints": [
+        "कॉमा से अलग किए दो एग्रीगेट फ़ंक्शन।",
+        "<code>SELECT SUM(amount), AVG(amount) FROM orders WHERE status = 'completed';</code>"
+      ]
+    },
+    "group-by": {
+      "title": "GROUP BY",
+      "explain": "<p><code>GROUP BY</code> रो को ग्रुप में बाँटता है और हर ग्रुप के लिए एग्रीगेट एक बार चलाता है। “हर प्लान में कितने यूज़र्स?” बन जाता है:</p>\n<pre>SELECT plan, COUNT(*) AS users\nFROM users\nGROUP BY plan;</pre>\n<p>आसान नियम: <code>SELECT</code> का हर कॉलम या तो <code>GROUP BY</code> में हो या किसी एग्रीगेट फ़ंक्शन के अंदर।</p>",
+      "task": "हर <code>acquisition_source</code> और उससे आए यूज़र्स की संख्या दिखाएँ।",
+      "hints": [
+        "उस कॉलम से ग्रुप करें जिसके हिसाब से गिनना है।",
+        "<code>GROUP BY acquisition_source</code>"
+      ]
+    },
+    "group-multi": {
+      "title": "हर ग्रुप के कई मेट्रिक्स",
+      "explain": "<p>हर ग्रुप के लिए कई एग्रीगेट निकाल सकती हैं और किसी एक से सॉर्ट कर सकती हैं। <code>ORDER BY</code> में उपनाम (alias) इस्तेमाल कर सकती हैं:</p>\n<pre>SELECT status, COUNT(*) AS n, SUM(amount) AS total\nFROM orders\nGROUP BY status\nORDER BY total DESC;</pre>",
+      "task": "हर ऑर्डर <code>status</code> के लिए status, ऑर्डर की संख्या, और कुल रकम दिखाएँ। ऑर्डर की संख्या से सॉर्ट करें, <b>सबसे ज़्यादा पहले</b>।",
+      "hints": [
+        "<code>COUNT(*)</code> और <code>SUM(amount)</code> इस्तेमाल करें, फिर <code>GROUP BY status</code>।",
+        "<code>SELECT status, COUNT(*) AS n, SUM(amount) FROM orders GROUP BY status ORDER BY n DESC;</code>"
+      ]
+    },
+    "having": {
+      "title": "HAVING",
+      "explain": "<p><code>WHERE</code> ग्रुप बनाने <b>से पहले रो</b> फ़िल्टर करता है। <code>HAVING</code> एग्रीगेट <b>के बाद ग्रुप</b> फ़िल्टर करता है। इसलिए <code>COUNT</code>, <code>SUM</code> आदि पर शर्तें <code>HAVING</code> में जाती हैं।</p>\n<pre>SELECT country, COUNT(*) AS n\nFROM users\nWHERE plan != 'free'\nGROUP BY country\nHAVING COUNT(*) &gt;= 2;</pre>\n<p>क्लॉज़ का क्रम हमेशा यही है: <code>SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT</code>।</p>",
+      "task": "किन देशों में <b>3 से ज़्यादा</b> यूज़र्स हैं? <code>country</code> और उसके यूज़र्स की गिनती दिखाएँ। (बिना देश वाले यूज़र्स को छोड़ दें।)",
+      "hints": [
+        "देश से ग्रुप करें, फिर <code>HAVING</code> से ग्रुप फ़िल्टर करें। NULL देशों को <code>WHERE</code> से हटाएँ।",
+        "<code>WHERE country IS NOT NULL GROUP BY country HAVING COUNT(*) &gt; 3</code>"
+      ]
+    },
+    "inner-join": {
+      "title": "INNER JOIN",
+      "explain": "<p>डेटा कई टेबलों में बँटा होता है। <code>orders</code> में सिर्फ़ <code>user_id</code> है; यूज़र का नाम <code>users</code> में है। <b>JOIN</b> एक साझा कॉलम से दो टेबलों की रो मिलाता है।</p>\n<pre>SELECT o.order_id, u.name\nFROM orders o\nJOIN users u ON o.user_id = u.user_id;</pre>\n<p><code>o</code> और <code>u</code> छोटे <b>टेबल उपनाम</b> हैं। <code>JOIN</code> (<code>INNER JOIN</code> जैसा ही) सिर्फ़ वे रो रखता है जिनका दोनों टेबलों में मेल हो।</p>",
+      "task": "हर ऑर्डर का <code>order_id</code>, यूज़र का <code>name</code>, और ऑर्डर का <code>amount</code> दिखाएँ।",
+      "hints": [
+        "साझा <code>user_id</code> कॉलम पर <code>users u</code> को जोड़ें।",
+        "<code>JOIN users u ON o.user_id = u.user_id</code>"
+      ]
+    },
+    "join-group": {
+      "title": "JOIN + GROUP BY",
+      "explain": "<p>JOIN और एग्रीगेट आसानी से साथ चलते हैं। “हर देश का रेवेन्यू” का मतलब: orders को users से जोड़ें, फिर देश से ग्रुप करें।</p>\n<pre>SELECT u.country, SUM(o.amount) AS revenue\nFROM orders o\nJOIN users u ON o.user_id = u.user_id\nWHERE o.status = 'completed'\nGROUP BY u.country;</pre>",
+      "task": "हर <code>plan</code> और उस प्लान के यूज़र्स के <b>completed</b> ऑर्डर का कुल <code>amount</code> दिखाएँ, सबसे ज़्यादा रेवेन्यू पहले।",
+      "hints": [
+        "जोड़ें, status पर फ़िल्टर करें, प्लान से ग्रुप करें, फिर सॉर्ट करें।",
+        "<code>... JOIN users u ON o.user_id = u.user_id WHERE o.status = 'completed' GROUP BY u.plan ORDER BY revenue DESC</code>"
+      ]
+    },
+    "left-join": {
+      "title": "LEFT JOIN",
+      "explain": "<p><code>LEFT JOIN</code> बाईं टेबल की <b>हर</b> रो रखता है, भले ही दाईं ओर मेल न हो। दाईं ओर के गायब कॉलम <code>NULL</code> हो जाते हैं।</p>\n<pre>SELECT u.name, o.order_id\nFROM users u\nLEFT JOIN orders o ON o.user_id = u.user_id;</pre>\n<p>पुरानी ट्रिक: जिन रो का <i>कोई</i> मेल नहीं, उन्हें ढूँढने के लिए LEFT JOIN करें और सिर्फ़ वे रो रखें जहाँ दाईं ओर <code>IS NULL</code> हो।</p>",
+      "task": "उन यूज़र्स को ढूँढें जिन्होंने <b>कभी ऑर्डर नहीं दिया</b>। उनका <code>user_id</code> और <code>name</code> दिखाएँ।",
+      "hints": [
+        "orders से LEFT JOIN करें, फिर वे रो रखें जहाँ ऑर्डर वाली तरफ़ NULL है।",
+        "<code>LEFT JOIN orders o ON o.user_id = u.user_id WHERE o.order_id IS NULL</code>"
+      ]
+    },
+    "left-join-count": {
+      "title": "LEFT JOIN के साथ गिनती",
+      "explain": "<p>अगर आपको शून्य भी चाहिए (“0 ऑर्डर वाले यूज़र्स”), तो LEFT JOIN करें और दाईं टेबल का कोई कॉलम गिनें। <code>COUNT(o.order_id)</code> NULL छोड़ देता है, इसलिए बिना मेल वाले यूज़र्स को 0 मिलता है। <code>COUNT(*)</code> उन्हें गलती से 1 दे देगा।</p>",
+      "task": "हर यूज़र का <code>name</code> और उन्होंने कितने ऑर्डर दिए दिखाएँ, <b>0 ऑर्डर वाले यूज़र्स समेत</b>।",
+      "hints": [
+        "orders से LEFT JOIN करें, फिर यूज़र से GROUP BY करें।",
+        "<code>LEFT JOIN orders o ON o.user_id = u.user_id GROUP BY u.user_id, u.name</code>"
+      ]
+    },
+    "self-join": {
+      "title": "सेल्फ़ जॉइन",
+      "explain": "<p>एक टेबल को <b>खुद</b> से भी जोड़ा जा सकता है। <code>employees</code> में <code>manager_id</code> उसी टेबल की दूसरी रो की ओर इशारा करता है। टेबल को दो उपनाम दें:</p>\n<pre>SELECT e.name AS employee, m.name AS manager\nFROM employees e\nJOIN employees m ON e.manager_id = m.emp_id;</pre>",
+      "task": "हर कर्मचारी का <code>name</code> और उसके मैनेजर का नाम दिखाएँ, उन कर्मचारियों के लिए जिनके मैनेजर <b>200000</b> से ज़्यादा कमाते हैं।",
+      "hints": [
+        "<code>e.manager_id = m.emp_id</code> पर <code>employees m</code> जोड़ें, फिर मैनेजर की सैलरी पर फ़िल्टर करें।",
+        "<code>JOIN employees m ON e.manager_id = m.emp_id WHERE m.salary &gt; 200000</code>"
+      ]
+    },
+    "subquery-where": {
+      "title": "WHERE में सबक्वेरी",
+      "explain": "<p><b>सबक्वेरी</b> ब्रैकेट में लिखी एक क्वेरी है जो दूसरी क्वेरी के अंदर इस्तेमाल होती है। यहाँ अंदर की क्वेरी एक नंबर निकालती है, जिससे बाहर की क्वेरी तुलना करती है:</p>\n<pre>SELECT * FROM employees\nWHERE salary &gt; (SELECT AVG(salary) FROM employees);</pre>",
+      "task": "उन ऑर्डर का <code>order_id</code> और <code>amount</code> दिखाएँ जिनकी रकम औसत ऑर्डर रकम (सभी ऑर्डर) <b>से ज़्यादा</b> है।",
+      "hints": [
+        "<code>amount</code> की तुलना <code>(SELECT AVG(amount) FROM orders)</code> से करें।",
+        "<code>WHERE amount &gt; (SELECT AVG(amount) FROM orders)</code>"
+      ]
+    },
+    "subquery-in": {
+      "title": "IN (सबक्वेरी)",
+      "explain": "<p>सबक्वेरी <code>IN</code> या <code>NOT IN</code> के लिए एक सूची लौटा सकती है:</p>\n<pre>SELECT name FROM users\nWHERE user_id IN (SELECT user_id FROM orders WHERE amount &gt; 100);</pre>\n<p>जब सिर्फ़ यह देखना हो कि “क्या कोई मेल है?”, तो यह अक्सर JOIN से पढ़ने में आसान होता है।</p>",
+      "task": "हर उस यूज़र का <code>name</code> दिखाएँ जिसने <code>'ai_assistant'</code> फ़ीचर कम से कम एक बार इस्तेमाल किया है।",
+      "hints": [
+        "सबक्वेरी को उस फ़ीचर से फ़िल्टर करके <code>feature_usage</code> से user_id लौटाने चाहिए।",
+        "<code>WHERE user_id IN (SELECT user_id FROM feature_usage WHERE feature = 'ai_assistant')</code>"
+      ]
+    },
+    "case": {
+      "title": "CASE WHEN",
+      "explain": "<p><code>CASE</code> SQL का if/else है। यह ऊपर से नीचे जाँचा जाता है और पहली सच शर्त जीतती है:</p>\n<pre>SELECT name,\n  CASE WHEN salary &gt;= 150000 THEN 'high'\n       WHEN salary &gt;= 120000 THEN 'mid'\n       ELSE 'low' END AS band\nFROM employees;</pre>\n<p>इंटरव्यू का एक बहुत आम पैटर्न है एग्रीगेट के अंदर CASE लगाकर हिस्सों को गिनना: <code>SUM(CASE WHEN status = 'refunded' THEN 1 ELSE 0 END)</code>।</p>",
+      "task": "हर ऑर्डर को आकार का लेबल दें: amount &lt; 50 तो <code>'small'</code>, amount &lt; 150 तो <code>'medium'</code>, वरना <code>'large'</code>। हर लेबल और उसमें कितने ऑर्डर हैं, दिखाएँ।",
+      "hints": [
+        "CASE को एक और WHEN और एक ELSE से पूरा करें, फिर <code>GROUP BY size</code>।",
+        "<code>CASE WHEN amount &lt; 50 THEN 'small' WHEN amount &lt; 150 THEN 'medium' ELSE 'large' END AS size ... GROUP BY size</code>"
+      ]
+    },
+    "cte": {
+      "title": "WITH (CTE)",
+      "explain": "<p><b>CTE</b> (<code>WITH</code> क्लॉज़) किसी सबक्वेरी को नाम देता है ताकि आप उसे टेबल की तरह इस्तेमाल कर सकें। इससे कई कदमों वाला लॉजिक पढ़ने में आसान होता है, और इंटरव्यूअर इसे पसंद करते हैं।</p>\n<pre>WITH spend AS (\n  SELECT user_id, SUM(amount) AS total\n  FROM orders\n  GROUP BY user_id\n)\nSELECT * FROM spend WHERE total &gt; 100;</pre>",
+      "task": "CTE का इस्तेमाल करके वे यूज़र्स ढूँढें जिनका कुल <b>completed</b> खर्च <b>200</b> से ज़्यादा है। उनका <code>name</code> और कुल खर्च दिखाएँ।",
+      "hints": [
+        "नाम पाने के लिए <code>spend</code> CTE को <code>users</code> से जोड़ें, फिर total पर फ़िल्टर करें।",
+        "<code>SELECT u.name, s.total FROM spend s JOIN users u ON u.user_id = s.user_id WHERE s.total &gt; 200;</code>"
+      ]
+    },
+    "dates": {
+      "title": "तारीखों के साथ काम",
+      "explain": "<p>SQLite में तारीखें <code>'2024-03-15'</code> जैसे टेक्स्ट होती हैं। <code>strftime</code> उनसे हिस्से निकालता है:</p>\n<ul>\n<li><code>strftime('%Y-%m', signup_date)</code> से <code>'2024-03'</code> (साल-महीना) मिलता है</li>\n<li><code>strftime('%Y', ...)</code> साल, <code>strftime('%m', ...)</code> महीना</li>\n<li><code>date('2024-03-15', '+7 days')</code> तारीखों का हिसाब करता है</li>\n</ul>\n<p>दूसरे डेटाबेस इसी काम के लिए <code>DATE_TRUNC</code> या <code>EXTRACT</code> इस्तेमाल करते हैं। इंटरव्यू में बस बता दें कि आप कौन सा इस्तेमाल करेंगी।</p>",
+      "task": "<b>हर महीने</b> के साइनअप गिनें। महीना <code>'YYYY-MM'</code> के रूप में और साइनअप की संख्या दिखाएँ, महीने के क्रम में।",
+      "hints": [
+        "महीने वाले एक्सप्रेशन से ग्रुप करें, फिर सॉर्ट करें।",
+        "<code>GROUP BY month ORDER BY month</code>"
+      ]
+    },
+    "conversion": {
+      "title": "कन्वर्ज़न रेट",
+      "explain": "<p>“कितने प्रतिशत साइनअप पैसे देने वाले बने?” PM का क्लासिक सवाल है। इसे तोड़ें: जिन यूज़र्स ने काम किया उन्हें गिनें, और सभी यूज़र्स से भाग दें।</p>\n<pre>SELECT 100.0 * COUNT(DISTINCT o.user_id) / COUNT(DISTINCT u.user_id) AS pct\nFROM users u\nLEFT JOIN orders o ON o.user_id = u.user_id;</pre>\n<p><code>100.0</code> पर ध्यान दें: यह पूर्णांक भाग से बचाता है। <code>DISTINCT</code> इसलिए क्योंकि एक यूज़र के कई ऑर्डर हो सकते हैं।</p>",
+      "task": "कितने प्रतिशत यूज़र्स का कम से कम एक <b>completed</b> ऑर्डर है? एक नंबर लौटाएँ (जैसे 66.67), 2 दशमलव तक गोल।",
+      "hints": [
+        "सावधान: अगर आप <code>status</code> को WHERE में फ़िल्टर करेंगी, तो बिना ऑर्डर वाले यूज़र्स गायब हो जाएँगे। status की शर्त <code>ON</code> क्लॉज़ में रखें।",
+        "<code>ON o.user_id = u.user_id AND o.status = 'completed'</code>"
+      ]
+    },
+    "window-rank": {
+      "title": "रैंकिंग (विंडो फ़ंक्शन)",
+      "explain": "<p><b>विंडो फ़ंक्शन</b> जुड़ी हुई रो पर हिसाब लगाते हैं, GROUP BY की तरह उन्हें समेटे बिना।</p>\n<pre>SELECT name, department, salary,\n  RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rnk\nFROM employees;</pre>\n<ul>\n<li><code>PARTITION BY</code> हर विभाग के लिए रैंकिंग फिर से शुरू करता है।</li>\n<li><code>ROW_NUMBER()</code> बिना बराबरी के 1,2,3 देता है; <code>RANK()</code> बराबरी पर एक ही नंबर देकर आगे छोड़ता है (1,1,3); <code>DENSE_RANK()</code> नहीं छोड़ता (1,1,2)।</li>\n</ul>",
+      "task": "पूरी कंपनी में सभी कर्मचारियों को सैलरी से रैंक करें, <b>सबसे ज़्यादा पहले</b>। <code>name</code>, <code>salary</code>, और <code>RANK()</code> से मिला रैंक दिखाएँ, रैंक के क्रम में।",
+      "hints": [
+        "<code>OVER ( )</code> के अंदर <code>ORDER BY salary DESC</code> लिखें। पूरी कंपनी के लिए है, इसलिए PARTITION की ज़रूरत नहीं।",
+        "<code>RANK() OVER (ORDER BY salary DESC) AS rnk ... ORDER BY rnk</code>"
+      ]
+    },
+    "top-per-group": {
+      "title": "हर ग्रुप का टॉप 1",
+      "explain": "<p>“हर विभाग में सबसे ज़्यादा सैलरी वाला व्यक्ति” बहुत आम सवाल है। CTE में विंडो फ़ंक्शन से हर ग्रुप के अंदर रैंक दें, फिर रैंक 1 रखें:</p>\n<pre>WITH ranked AS (\n  SELECT *, ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS rn\n  FROM employees\n)\nSELECT * FROM ranked WHERE rn = 1;</pre>",
+      "task": "<b>हर विभाग में सबसे ज़्यादा सैलरी वाले कर्मचारी</b> का <code>department</code>, <code>name</code> और <code>salary</code> दिखाएँ।",
+      "hints": [
+        "<code>ranked</code> से चुनें और सिर्फ़ <code>rn = 1</code> रखें।",
+        "<code>SELECT department, name, salary FROM ranked WHERE rn = 1;</code>"
+      ]
+    },
+    "running-total": {
+      "title": "चलता हुआ जोड़ (running total)",
+      "explain": "<p><code>ORDER BY</code> के साथ विंडो <code>SUM</code> चलता हुआ (cumulative) जोड़ देता है, जो ग्रोथ चार्ट के लिए काम आता है:</p>\n<pre>SELECT month, revenue,\n  SUM(revenue) OVER (ORDER BY month) AS cumulative\nFROM monthly;</pre>\n<p>इसे एक CTE के साथ मिला सकती हैं जो पहले महीने के हिसाब से जोड़ता है।</p>",
+      "task": "हर महीना (<code>order_date</code> से <code>'YYYY-MM'</code>), उस महीने के <b>completed</b> ऑर्डर का रेवेन्यू, और अब तक का <b>कुल जोड़</b> दिखाएँ। महीने के क्रम में।",
+      "hints": [
+        "बाहरी क्वेरी में <code>SUM(revenue) OVER (ORDER BY month)</code> इस्तेमाल करें।",
+        "<code>SELECT month, revenue, SUM(revenue) OVER (ORDER BY month) FROM monthly ORDER BY month;</code>"
+      ]
+    },
+    "engagement": {
+      "title": "एंगेजमेंट मेट्रिक्स",
+      "explain": "<p>PM को परवाह होती है कि हर फ़ीचर कितने <b>अलग यूज़र्स</b> इस्तेमाल करते हैं, सिर्फ़ इवेंट की गिनती की नहीं। <code>COUNT(DISTINCT user_id)</code> आपका दोस्त है। एक आम अगला सवाल है “हर सक्रिय यूज़र का औसत इस्तेमाल” = कुल / अलग यूज़र्स।</p>",
+      "task": "हर <code>feature</code> के लिए <b>अलग यूज़र्स</b> की संख्या और इस्तेमाल हुए <b>कुल मिनट</b> दिखाएँ। अलग यूज़र्स से सॉर्ट करें (सबसे ज़्यादा पहले), फिर फ़ीचर के नाम से।",
+      "hints": [
+        "<code>COUNT(DISTINCT user_id)</code> और <code>SUM(minutes_used)</code>, फ़ीचर से ग्रुप करके।",
+        "<code>... GROUP BY feature ORDER BY users DESC, feature</code>"
+      ]
+    },
+    "mock-second-salary": {
+      "title": "Q1. दूसरी सबसे ज़्यादा सैलरी",
+      "task": "कंपनी की <b>दूसरी सबसे ज़्यादा</b> अलग सैलरी एक नंबर के रूप में लौटाएँ।",
+      "hints": [
+        "वह सबसे बड़ी सैलरी ढूँढें जो कुल सबसे बड़ी से कम हो। या DISTINCT सैलरी पर ORDER BY के साथ LIMIT/OFFSET इस्तेमाल करें।",
+        "<code>SELECT MAX(salary) FROM employees WHERE salary &lt; (SELECT MAX(salary) FROM employees);</code>"
+      ]
+    },
+    "mock-inactive": {
+      "title": "Q2. साइन अप किया, कभी इस्तेमाल नहीं किया",
+      "task": "किन यूज़र्स ने <b>कभी कोई फ़ीचर इस्तेमाल नहीं किया</b>? उनका <code>user_id</code> और <code>name</code> लौटाएँ।",
+      "hints": [
+        "Anti-join: LEFT JOIN करके NULL देखें, या <code>NOT IN</code> इस्तेमाल करें।",
+        "<code>SELECT u.user_id, u.name FROM users u LEFT JOIN feature_usage f ON f.user_id = u.user_id WHERE f.event_id IS NULL;</code>"
+      ]
+    },
+    "mock-aov-source": {
+      "title": "Q3. चैनल के हिसाब से AOV",
+      "task": "मार्केटिंग जानना चाहती है कि कौन सा acquisition चैनल सबसे अच्छे ग्राहक लाता है। हर <code>acquisition_source</code> के लिए <b>औसत completed ऑर्डर वैल्यू</b> लौटाएँ, 2 दशमलव तक गोल। सबसे ज़्यादा पहले।",
+      "hints": [
+        "orders को users से जोड़ें, completed फ़िल्टर करें, source से ग्रुप करें, amount का AVG लें।",
+        "<code>SELECT u.acquisition_source, ROUND(AVG(o.amount), 2) AS aov FROM orders o JOIN users u ON u.user_id = o.user_id WHERE o.status = 'completed' GROUP BY 1 ORDER BY aov DESC;</code>"
+      ]
+    },
+    "mock-power-users": {
+      "title": "Q4. पावर यूज़र्स",
+      "task": "<b>3 या ज़्यादा ऑर्डर</b> (कोई भी status) वाले यूज़र्स ढूँढें। <code>name</code> और उनके ऑर्डर की गिनती लौटाएँ, सबसे ज़्यादा ऑर्डर पहले, फिर नाम से।",
+      "hints": [
+        "यूज़र से GROUP BY करें और HAVING से फ़िल्टर करें।",
+        "<code>... GROUP BY u.user_id, u.name HAVING COUNT(*) &gt;= 3 ORDER BY n DESC, u.name</code>"
+      ]
+    },
+    "mock-refund-rate": {
+      "title": "Q5. प्लान के हिसाब से रिफ़ंड रेट",
+      "task": "हर <code>plan</code> के कितने प्रतिशत ऑर्डर <code>'refunded'</code> थे? प्लान और रिफ़ंड रेट (प्रतिशत, 1 दशमलव तक गोल) लौटाएँ, प्लान के नाम से सॉर्ट करके।",
+      "hints": [
+        "refunded ऑर्डर को <code>SUM(CASE WHEN ... THEN 1 ELSE 0 END)</code> से गिनें और <code>COUNT(*)</code> से भाग दें।",
+        "<code>ROUND(100.0 * SUM(CASE WHEN o.status = 'refunded' THEN 1 ELSE 0 END) / COUNT(*), 1)</code>"
+      ]
+    },
+    "mock-top-feature-pro": {
+      "title": "Q6. पैसे देने वाले यूज़र्स का पसंदीदा फ़ीचर",
+      "task": "<b>पेड प्लान</b> (<code>'pro'</code> या <code>'enterprise'</code>) वाले यूज़र्स में, किस फ़ीचर के कुल <code>minutes_used</code> सबसे ज़्यादा हैं? फ़ीचर और उसके कुल मिनट लौटाएँ (सिर्फ़ सबसे ऊपर वाला)।",
+      "hints": [
+        "जोड़ें, IN से प्लान फ़िल्टर करें, फ़ीचर से ग्रुप करें, सॉर्ट करें और LIMIT 1।",
+        "<code>... WHERE u.plan IN ('pro','enterprise') GROUP BY f.feature ORDER BY minutes DESC LIMIT 1</code>"
+      ]
+    }
+  },
+  "tables": {
+    "users": "साइन अप करने वाले लोग",
+    "orders": "लोगों की खरीदी चीज़ें",
+    "feature_usage": "किसने कौन सा फ़ीचर इस्तेमाल किया"
+  }
+}

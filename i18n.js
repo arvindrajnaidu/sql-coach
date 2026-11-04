@@ -35,6 +35,9 @@
   function pickLang(available) {
     const codes = available.map((l) => l.code);
     const fromUrl = new URLSearchParams(location.search).get("lang");
+    if (fromUrl && codes.includes(fromUrl)) {
+      try { localStorage.setItem(LANG_KEY, fromUrl); } catch (e) {} // a shared ?lang= link sticks
+    }
     let saved = null;
     try { saved = localStorage.getItem(LANG_KEY); } catch (e) {}
     const browser = (navigator.languages || [navigator.language || "en"]).map((l) => l.toLowerCase());
