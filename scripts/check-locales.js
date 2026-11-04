@@ -30,6 +30,9 @@ function walk(a, b, p, out) {
   if (a && typeof a === "object") {
     if (b === undefined) return out.missing.push(p);
     for (const k of Object.keys(a)) walk(a[k], b[k], p ? `${p}.${k}` : k, out);
+    if (b && typeof b === "object" && !Array.isArray(b)) {
+      for (const k of Object.keys(b)) if (!(k in a)) out.problems.push(`${p ? p + "." : ""}${k}: unknown key (typo?), the app never reads it`);
+    }
   }
 }
 

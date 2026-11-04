@@ -1,5 +1,18 @@
 [
-  { "code": "en", "name": "English" },
-  { "code": "hi", "name": "हिन्दी" },
-  { "code": "es", "name": "Español" }
+  {
+    "code": "en",
+    "name": "English"
+  },
+  {
+    "code": "hi",
+    "name": "हिन्दी"
+  },
+  {
+    "code": "es",
+    "name": "Español"
+  },
+  {
+    "code": "ta",
+    "name": "தமிழ்"
+  }
 ]
