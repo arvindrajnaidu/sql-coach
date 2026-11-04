@@ -128,8 +128,13 @@
       }).join("");
       return `<div class="level${unlocked ? "" : " locked"}">
         <div class="level-head">
-          <div class="level-title"><span>${unlocked ? "" : "🔒 "}${li + 1}. ${esc(level.title)}</span><span class="level-count">${doneCount}/${level.lessons.length}</span></div>
+          <div class="level-title">
+            <span class="level-num${doneCount === level.lessons.length ? " full" : ""}">${unlocked ? (doneCount === level.lessons.length ? "✓" : li + 1) : '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'}</span>
+            <span class="level-name">${esc(level.title)}</span>
+            <span class="level-count">${doneCount}/${level.lessons.length}</span>
+          </div>
           <div class="level-blurb">${esc(level.blurb)}</div>
+          <div class="level-bar"><i style="width:${Math.round((100 * doneCount) / level.lessons.length)}%"></i></div>
         </div>${items}</div>`;
     }).join("") + `<div class="sidebar-foot">
         ${t("sidebar.unlockNote")}
@@ -149,7 +154,7 @@
     });
 
     const pct = Math.round((100 * Object.keys(state.done).filter((k) => byId[k]).length) / lessons.length);
-    $("progressFill").style.width = pct + "%";
+    $("progressArc").setAttribute("stroke-dasharray", `${pct} 100`);
     $("progressText").textContent = pct + "%";
   }
 
@@ -512,7 +517,7 @@
     const sel = $("langSelect");
     if (I18N.languages.length < 2) return;
     sel.innerHTML = I18N.languages.map((l) => `<option value="${l.code}"${l.code === I18N.lang ? " selected" : ""}>${esc(l.name)}</option>`).join("");
-    sel.hidden = false;
+    $("langWrap").hidden = false;
     sel.addEventListener("change", () => I18N.setLang(sel.value));
   }
 

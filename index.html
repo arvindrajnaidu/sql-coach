@@ -5,21 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SQL Coach</title>
   <meta name="description" content="Learn SQL step by step for product and program manager interviews. Runs entirely in your browser." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗄️</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%233552d4'/><g fill='%23fff'><rect x='20' y='24' width='60' height='14' rx='4'/><rect x='20' y='44' width='26' height='12' rx='3' opacity='.75'/><rect x='54' y='44' width='26' height='12' rx='3' opacity='.75'/><rect x='20' y='62' width='26' height='12' rx='3' opacity='.75'/><rect x='54' y='62' width='26' height='12' rx='3' fill='%23ffd23f'/></g></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <!-- All visible wording comes from locales/<lang>.json via the data-i18n* attributes and t() in app.js. -->
 <body>
   <header class="topbar">
-    <button id="menuBtn" class="icon-btn" data-i18n-aria="top.menu">☰</button>
-    <div class="brand" data-i18n="app.title"></div>
-    <div class="progress-wrap" data-i18n-title="top.progress">
-      <div class="progress-bar"><div id="progressFill"></div></div>
-      <span id="progressText">0%</span>
+    <div class="topbar-inner">
+      <button id="menuBtn" class="icon-btn" data-i18n-aria="top.menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <a class="brand" href="#">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="brand-name" data-i18n="app.title"></span>
+      </a>
+      <div class="top-tools">
+        <div class="progress-ring" data-i18n-title="top.progress">
+          <svg viewBox="0 0 36 36" aria-hidden="true">
+            <circle class="ring-track" cx="18" cy="18" r="15.5"/>
+            <circle id="progressArc" class="ring-fill" cx="18" cy="18" r="15.5" pathLength="100" stroke-dasharray="0 100"/>
+          </svg>
+          <span id="progressText">0%</span>
+        </div>
+        <label class="lang-pick" id="langWrap" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></svg>
+          <select id="langSelect" data-i18n-aria="top.language"></select>
+        </label>
+        <nav class="top-nav">
+          <button id="sandboxBtn" class="nav-btn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 9l3 3-3 3M12 15h5"/></svg>
+            <span data-i18n="top.sandbox"></span>
+          </button>
+          <button id="cheatBtn" class="nav-btn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h10a4 4 0 0 1 4 4v12H9a4 4 0 0 1-4-4V4z"/><path d="M9 9h6M9 13h4"/></svg>
+            <span data-i18n="top.cheat"></span>
+          </button>
+        </nav>
+      </div>
     </div>
-    <select id="langSelect" class="lang-select" data-i18n-aria="top.language" hidden></select>
-    <button id="sandboxBtn" class="ghost-btn" data-i18n="top.sandbox"></button>
-    <button id="cheatBtn" class="ghost-btn" data-i18n="top.cheat"></button>
   </header>
 
   <div class="layout">
