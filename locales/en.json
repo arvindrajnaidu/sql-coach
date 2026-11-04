@@ -1,0 +1,656 @@
+{
+  "meta": {
+    "name": "English",
+    "dir": "ltr"
+  },
+  "ui": {
+    "app.title": "SQL Coach",
+    "app.description": "Learn SQL step by step for product and program manager interviews. Runs entirely in your browser.",
+    "app.loading": "Loading the database…",
+    "app.dbError": "Couldn't start the in-browser database: {error}",
+    "top.menu": "Show lessons",
+    "top.progress": "Lessons completed",
+    "top.sandbox": "Sandbox",
+    "top.cheat": "Cheat sheet",
+    "top.language": "Language",
+    "sidebar.unlockNote": "Levels unlock when you finish the one before.",
+    "sidebar.unlockAll": "Unlock everything",
+    "sidebar.relock": "Re-lock levels",
+    "sidebar.reset": "Reset progress",
+    "sidebar.resetConfirm": "Clear all progress and saved answers?",
+    "lesson.crumb": "Level {level} · {title} · {n} of {total}",
+    "lesson.task": "Your task",
+    "lesson.tables": "Tables for this lesson",
+    "lesson.editorLabel": "SQL editor",
+    "lesson.run": "Run",
+    "lesson.check": "Check answer",
+    "lesson.hint": "Hint ({shown}/{total})",
+    "lesson.noMoreHints": "No more hints",
+    "lesson.mockHintLocked": "In the mock interview, hints unlock after one attempt",
+    "lesson.expected": "Expected output",
+    "lesson.reset": "Reset",
+    "lesson.prev": "← Previous",
+    "lesson.next": "Next lesson →",
+    "lesson.nextLocked": "Finish this level to unlock the next one",
+    "lesson.alreadySolved": "✓ You've already solved this one. Feel free to try it again.",
+    "lesson.writeFirst": "Write a query first.",
+    "lesson.queryError": "Your query has an error. Read the message below. Typos and missing commas are the usual suspects.",
+    "lesson.correct": "✓ Correct! Nice work.",
+    "lesson.levelDone": "🎉 Correct, and that finishes <b>{level}</b>! Level {next} is unlocked.",
+    "lesson.allDone": "🏆 Correct! You've finished the mock interview. You're ready. Good luck!",
+    "lesson.notQuite": "Not quite.",
+    "lesson.tryHint": "Try a hint if you're stuck.",
+    "lesson.hintLabel": "Hint {n}:",
+    "lesson.solutionLabel": "Solution:",
+    "lesson.expectedOrdered": "Expected output (order matters)",
+    "lesson.expectedUnordered": "Expected output (any row order is fine)",
+    "lesson.solutionFailed": "Lesson solution failed: {error}",
+    "check.noTable": "Your query didn't return any table. Make sure it's a SELECT.",
+    "check.columns_one": "Expected {expected} column, but your result has {actual}.",
+    "check.columns_other": "Expected {expected} columns, but your result has {actual}.",
+    "check.rows_one": "Expected {expected} row, but your result has {actual}.",
+    "check.rows_other": "Expected {expected} rows, but your result has {actual}.",
+    "check.order": "Right rows, but in the wrong order. Check your ORDER BY.",
+    "check.columnOrder": "Right values, but the columns are in a different order than the task asks.",
+    "check.values": "Same number of rows and columns, but some values are different.",
+    "results.ranNoRows": "Query ran. No rows to show.",
+    "results.rows_one": "{n} row",
+    "results.rows_other": "{n} rows",
+    "results.truncated": "(showing first {n})",
+    "schema.rows": "({n} rows)",
+    "schema.preview": "preview",
+    "schema.previewOf": "Preview of <b>{table}</b> (first 10 rows)",
+    "quiz.learn": "Learn",
+    "quiz.tapTag": "Quick quiz · tap it",
+    "quiz.choiceTag": "Quick quiz",
+    "quiz.tapPrompt": "Tap your answer above",
+    "quiz.choicePrompt": "Pick one answer",
+    "quiz.correct": "Correct!",
+    "quiz.notQuite": "Not quite.",
+    "quiz.comeBack": "We'll come back to this one.",
+    "quiz.continue": "Continue",
+    "quiz.gotIt": "Got it",
+    "quiz.keysLegend": "🔑 primary key · 🔗 foreign key (points to users.user_id)",
+    "quiz.lessonDone": "Lesson complete!",
+    "quiz.basicsDone": "Basics complete!",
+    "quiz.perfect": "Perfect, no mistakes!",
+    "quiz.mistakes_one": "You fixed {n} mistake along the way. That's how learning works.",
+    "quiz.mistakes_other": "You fixed {n} mistakes along the way. That's how learning works.",
+    "quiz.basicsNext": "You know the vocabulary now. Next you'll write your first real SQL query.",
+    "quiz.nextLesson": "Next lesson",
+    "quiz.startSql": "Start writing SQL →",
+    "sandbox.title": "Sandbox",
+    "sandbox.intro": "Write any query you like against the practice tables. Nothing here is graded, and the data resets every run.",
+    "sandbox.allTables": "All tables",
+    "cheat.title": "Cheat sheet"
+  },
+  "cheat": [
+    "-- Order of clauses\nSELECT   columns / aggregates\nFROM     table\nJOIN     other ON key = key\nWHERE    row filter\nGROUP BY columns\nHAVING   group filter\nORDER BY columns [DESC]\nLIMIT    n;",
+    "-- Filters\n= != < > <= >=\nAND  OR  NOT\nIN ('a','b')\nBETWEEN x AND y\nLIKE 'A%'   -- % any, _ one char\nIS NULL / IS NOT NULL",
+    "-- Aggregates\nCOUNT(*)  COUNT(col)  COUNT(DISTINCT col)\nSUM  AVG  MIN  MAX\nROUND(x, 2)\n100.0 * a / b   -- avoid integer division",
+    "-- Joins\nJOIN      only matches\nLEFT JOIN keep all left rows\n          (right side NULL if no match)\n-- anti-join: LEFT JOIN ... WHERE right.id IS NULL",
+    "-- Conditional logic\nCASE WHEN x THEN 'a'\n     WHEN y THEN 'b'\n     ELSE 'c' END\nSUM(CASE WHEN cond THEN 1 ELSE 0 END)",
+    "-- CTE and windows\nWITH t AS (SELECT ...)\nSELECT * FROM t;\n\nROW_NUMBER() OVER (PARTITION BY g ORDER BY x DESC)\nRANK() / DENSE_RANK()\nSUM(x) OVER (ORDER BY d)  -- running total",
+    "-- Dates (SQLite)\nstrftime('%Y-%m', d)   -- '2024-03'\ndate(d, '+7 days')\n-- Postgres: DATE_TRUNC('month', d)",
+    "-- Interview tips\n1. Repeat the question, ask about\n   NULLs, duplicates, ties.\n2. Say the plan before typing.\n3. Build step by step, check\n   intermediate results.\n4. Sanity-check the final numbers."
+  ],
+  "levels": {
+    "intro": {
+      "title": "Database basics",
+      "blurb": "Tables, rows, columns and keys: a visual warm-up quiz."
+    },
+    "basics": {
+      "title": "SELECT & WHERE",
+      "blurb": "Read data out of a table and filter it."
+    },
+    "sorting": {
+      "title": "Sorting & shaping results",
+      "blurb": "ORDER BY, LIMIT, DISTINCT and calculated columns."
+    },
+    "aggregates": {
+      "title": "Aggregates & GROUP BY",
+      "blurb": "Counting, summing and grouping: the heart of PM metrics."
+    },
+    "joins": {
+      "title": "JOINs",
+      "blurb": "Combine tables, the most common interview topic."
+    },
+    "subqueries": {
+      "title": "Subqueries, CASE & dates",
+      "blurb": "Queries inside queries, if/else logic, and working with dates."
+    },
+    "patterns": {
+      "title": "Interview patterns",
+      "blurb": "The questions PM interviewers actually ask."
+    },
+    "mock": {
+      "title": "Mock interview",
+      "blurb": "No explanations, hints unlock after a wrong try. Talk through your thinking out loud!"
+    }
+  },
+  "lessons": {
+    "intro-tables": {
+      "title": "What's a database?",
+      "steps": [
+        {
+          "html": "<p>👋 Welcome! Before writing any code, let's learn the words people use.</p>\n<p>A <b>database</b> is where a company keeps its data, organised so it's easy to look things up. Think of it as a very tidy collection of spreadsheets.</p>\n<p>Each \"spreadsheet\" is called a <b>table</b>. A product might have one table for users, one for orders, and one for feature usage.</p>"
+        },
+        {
+          "prompt": "Your manager asks: <b>how much money did we make last week?</b> Tap the table you'd look in.",
+          "right": "Yes! Money comes from purchases, and purchases live in <code>orders</code>.",
+          "wrong": "Not that one. Which table is about things people bought?"
+        },
+        {
+          "prompt": "Now: <b>which features are people using the most?</b> Tap the table.",
+          "right": "Exactly. <code>feature_usage</code> records each time someone uses a feature.",
+          "wrong": "Look for the table that's about features."
+        },
+        {
+          "prompt": "A <b>table</b> is most like…",
+          "options": [
+            "A single number",
+            "A spreadsheet with rows and columns",
+            "A chart",
+            "A programming language"
+          ],
+          "right": "Right. Tables look and feel a lot like spreadsheet tabs."
+        }
+      ]
+    },
+    "intro-rows-cols": {
+      "title": "Rows, columns & cells",
+      "steps": [
+        {
+          "html": "<p>Here's the <code>users</code> table up close.</p>\n<p>A <b>row</b> (also called a <i>record</i>) is <b>one thing</b>. Here, each row is one person. The highlighted row is everything we know about Ben.</p>",
+          "label": "← one row = one user"
+        },
+        {
+          "prompt": "Tap anywhere on <b>Priya's row</b>.",
+          "right": "Nice. That whole line is Priya's record.",
+          "wrong": "Find the line where the name is Priya."
+        },
+        {
+          "html": "<p>A <b>column</b> (also called a <i>field</i>) is <b>one kind of information</b>, the same for every row. The highlighted column is <code>country</code>.</p>\n<p>The bold names at the top are <b>column names</b>. You'll type these in your queries.</p>"
+        },
+        {
+          "prompt": "Tap the <b>plan</b> column.",
+          "right": "Yes. Every user has a plan, so it's a column.",
+          "wrong": "Look at the names along the top. Which one says plan?"
+        },
+        {
+          "html": "<p>Where a row and a column cross, you get a <b>cell</b>: a single value. This cell is <i>Aisha's country</i>.</p>"
+        },
+        {
+          "prompt": "Tap the cell that shows <b>Ben's signup date</b>.",
+          "right": "Perfect: Ben's row, signup_date column.",
+          "wrong": "Find Ben's row first, then slide across to signup_date."
+        },
+        {
+          "prompt": "In the <code>users</code> table, what does <b>one row</b> represent?",
+          "options": [
+            "One country",
+            "One user",
+            "One plan",
+            "One column"
+          ],
+          "right": "Exactly. One row, one user. In <code>orders</code>, one row is one order."
+        },
+        {
+          "prompt": "How many <b>columns</b> does this <code>users</code> table have?",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "20"
+          ],
+          "right": "Yes: user_id, name, country, plan, signup_date."
+        }
+      ]
+    },
+    "intro-types-null": {
+      "title": "Data types & empty values",
+      "steps": [
+        {
+          "html": "<p>Every column holds one <b>type</b> of data:</p>\n<ul><li><b>number</b>: 42, 19.99</li><li><b>text</b>: 'Ben', 'pro' (in SQL, text goes in 'single quotes')</li><li><b>date</b>: '2024-02-11' (year-month-day)</li></ul>\n<p>The little grey labels under each column name show its type.</p>"
+        },
+        {
+          "prompt": "What type of data is in the <code>amount</code> column of <code>orders</code>?",
+          "options": [
+            "text",
+            "number",
+            "date"
+          ],
+          "right": "Right, amounts are numbers, so we can add them up."
+        },
+        {
+          "html": "<p>Sometimes a value is <b>missing</b>. Databases call that <b>NULL</b>. It means \"unknown\" or \"not filled in\", which is different from zero or an empty word.</p>\n<p>Chen never told us their country, so that cell is NULL.</p>"
+        },
+        {
+          "prompt": "Tap the <b>NULL</b> (missing) value.",
+          "right": "Got it. Interviewers love asking how you'd handle NULLs!",
+          "wrong": "Look for the cell that says NULL in grey."
+        },
+        {
+          "prompt": "NULL means…",
+          "options": [
+            "The number zero",
+            "The value is missing / unknown",
+            "An error in the database",
+            "The word 'null'"
+          ],
+          "right": "Yes. NULL is \"we don't know\", not zero."
+        }
+      ]
+    },
+    "intro-keys": {
+      "title": "Keys: how tables connect",
+      "steps": [
+        {
+          "html": "<p>Every table has a column that gives each row a <b>unique ID</b>, like a passport number. It's called the <b>primary key</b>.</p>\n<p>In <code>users</code> it's <code>user_id</code>. No two users ever share one.</p>"
+        },
+        {
+          "prompt": "Tap the <b>primary key</b> column of <code>orders</code>.",
+          "right": "Yes, <code>order_id</code> uniquely identifies each order.",
+          "wrong": "The primary key is the unique ID for each order. Which column is that?"
+        },
+        {
+          "html": "<p>How do we know <b>who</b> placed an order? The <code>orders</code> table has a <code>user_id</code> column that <b>points to</b> a row in <code>users</code>.</p>\n<p>A column that points to another table's primary key is a <b>foreign key</b>. It's the bridge between tables. Order 101 has user_id <b>2</b>, so it was Ben.</p>"
+        },
+        {
+          "prompt": "Order <b>102</b>: who bought it? Tap that person's row in <code>users</code>.",
+          "right": "Correct! Order 102 has user_id 4, which is Priya. Combining tables like this is called a <b>JOIN</b>. You'll learn it later.",
+          "wrong": "Find order 102's user_id, then find the user with that ID."
+        },
+        {
+          "prompt": "Ben (user_id 2) has how many orders?",
+          "options": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "right": "Yes, orders 101 and 103 both have user_id 2."
+        }
+      ]
+    },
+    "intro-schema": {
+      "title": "Schemas: the map",
+      "steps": [
+        {
+          "html": "<p>A <b>schema</b> is the blueprint of a database: which tables exist, what columns they have, their types, and how they link. It shows no actual data, just the structure.</p>\n<p>In an interview you'll often be shown a schema like this and asked to write a query. Reading it calmly is half the battle.</p>"
+        },
+        {
+          "prompt": "In the schema, tap the column that tells you <b>which feature</b> was used.",
+          "right": "Yes, <code>feature_usage.feature</code>. People often write table.column like that.",
+          "wrong": "Look inside the feature_usage box."
+        },
+        {
+          "prompt": "Tap the column in <code>feature_usage</code> that <b>links back to users</b>.",
+          "right": "Exactly: <code>user_id</code> is the foreign key back to <code>users</code>.",
+          "wrong": "Which column has the same name as the users primary key?"
+        },
+        {
+          "prompt": "A schema shows…",
+          "options": [
+            "Every row of data",
+            "The structure: tables, columns, types and links",
+            "Charts of the data",
+            "Only the primary keys"
+          ],
+          "right": "Right. A schema is the map, not the territory."
+        }
+      ]
+    },
+    "intro-sql": {
+      "title": "Meet SQL",
+      "steps": [
+        {
+          "html": "<p><b>SQL</b> (say \"sequel\" or \"S-Q-L\") is how you ask a database questions. It reads almost like English:</p>\n<p>\"Show me the <b>name</b> of every user\" becomes:</p>\n<pre>SELECT name FROM users;</pre>\n<p><code>SELECT</code> says <b>which columns</b> you want. <code>FROM</code> says <b>which table</b>. The answer comes back as a new little table.</p>"
+        },
+        {
+          "prompt": "In this query, tap the <b>table name</b>.",
+          "right": "Yes! The table comes right after FROM.",
+          "wrong": "The table name comes after the word FROM."
+        },
+        {
+          "prompt": "Tap the word that says <b>which table</b> to look in. It always comes just before the table name.",
+          "right": "Right, FROM. SELECT picks columns, FROM picks the table.",
+          "wrong": "SELECT picks columns. Which keyword picks the table?"
+        },
+        {
+          "prompt": "Which query shows the <b>country</b> of every user?",
+          "options": [
+            "SELECT users FROM country;",
+            "SELECT country FROM users;",
+            "FROM users SELECT country;",
+            "SHOW country IN users;"
+          ],
+          "right": "Perfect: SELECT the column, FROM the table. 🎉 You know the basics now. Next up: writing real queries!"
+        }
+      ]
+    },
+    "select-all": {
+      "title": "Your first query",
+      "explain": "<p>A database is a set of <b>tables</b>. Each table has <b>columns</b> (fields) and <b>rows</b> (records). The <code>users</code> table has one row per person who signed up for our product.</p>\n<p>To read data you write a <code>SELECT</code> statement. <code>*</code> means \"every column\".</p>\n<pre>SELECT * FROM users;</pre>\n<p>SQL keywords aren't case sensitive, but writing them in CAPITALS makes queries easier to read. The semicolon at the end is optional here.</p>",
+      "task": "Show every column and every row of the <code>users</code> table.",
+      "hints": [
+        "Use <code>*</code> to mean all columns.",
+        "<code>SELECT * FROM users;</code>"
+      ]
+    },
+    "select-cols": {
+      "title": "Picking columns",
+      "explain": "<p>Usually you only want a few columns. List them after <code>SELECT</code>, separated by commas, in the order you want them shown.</p>\n<pre>SELECT name, plan FROM users;</pre>",
+      "task": "Show each user's <code>name</code> and <code>country</code>.",
+      "hints": [
+        "List the two column names separated by a comma.",
+        "<code>SELECT name, country FROM users;</code>"
+      ]
+    },
+    "where": {
+      "title": "Filtering with WHERE",
+      "explain": "<p><code>WHERE</code> keeps only the rows that match a condition. Text values go in <b>single quotes</b>.</p>\n<pre>SELECT name FROM users WHERE country = 'India';</pre>\n<p>Comparison operators: <code>=</code>, <code>!=</code> (or <code>&lt;&gt;</code>), <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>. Dates stored as <code>'YYYY-MM-DD'</code> text compare correctly with these too.</p>",
+      "task": "Show the <code>name</code> and <code>signup_date</code> of every user on the <code>'pro'</code> plan.",
+      "hints": [
+        "The condition goes after <code>WHERE</code>, and it compares the <code>plan</code> column.",
+        "<code>WHERE plan = 'pro'</code>"
+      ]
+    },
+    "and-or": {
+      "title": "AND, OR",
+      "explain": "<p>Combine conditions with <code>AND</code> (both must be true) and <code>OR</code> (either is true). Use parentheses when you mix them, so it's clear what goes together.</p>\n<pre>SELECT name FROM users\nWHERE plan = 'free' AND (country = 'UK' OR country = 'Germany');</pre>",
+      "task": "Show the <code>name</code> of users who are on the <code>'pro'</code> or <code>'enterprise'</code> plan <b>and</b> are from the <code>'US'</code>.",
+      "hints": [
+        "You need one <code>AND</code> and one <code>OR</code>. Where do the parentheses go?",
+        "<code>WHERE country = 'US' AND (plan = 'pro' OR plan = 'enterprise')</code>"
+      ]
+    },
+    "in-between-like": {
+      "title": "IN, BETWEEN, LIKE",
+      "explain": "<p>Three shortcuts that come up all the time:</p>\n<ul>\n<li><code>country IN ('UK', 'Germany')</code> is the same as two ORs.</li>\n<li><code>signup_date BETWEEN '2024-02-01' AND '2024-02-29'</code> includes both ends.</li>\n<li><code>name LIKE 'A%'</code> matches text patterns. <code>%</code> means \"any characters\", <code>_</code> means \"exactly one character\".</li>\n</ul>",
+      "task": "Show the <code>name</code> and <code>signup_date</code> of users who signed up in <b>March 2024</b> (from <code>'2024-03-01'</code> to <code>'2024-03-31'</code>).",
+      "hints": [
+        "<code>BETWEEN ... AND ...</code> is perfect for a date range.",
+        "<code>WHERE signup_date BETWEEN '2024-03-01' AND '2024-03-31'</code>"
+      ]
+    },
+    "null": {
+      "title": "Missing values (NULL)",
+      "explain": "<p><code>NULL</code> means \"no value / unknown\". It's not equal to anything, not even another NULL, so <code>country = NULL</code> never matches.</p>\n<p>Use <code>IS NULL</code> and <code>IS NOT NULL</code> instead:</p>\n<pre>SELECT name FROM users WHERE country IS NOT NULL;</pre>\n<p>Interviewers love asking about this, because forgetting it silently gives wrong answers.</p>",
+      "task": "Find the <code>user_id</code> and <code>name</code> of users whose <code>country</code> is missing.",
+      "hints": [
+        "<code>= NULL</code> won't work. There's a special operator.",
+        "<code>WHERE country IS NULL</code>"
+      ]
+    },
+    "order-by": {
+      "title": "ORDER BY",
+      "explain": "<p>Rows come back in no guaranteed order unless you ask. <code>ORDER BY</code> sorts them. <code>ASC</code> (smallest first) is the default, <code>DESC</code> is largest first.</p>\n<pre>SELECT name, signup_date FROM users ORDER BY signup_date DESC;</pre>\n<p>You can sort by several columns: <code>ORDER BY country, name</code> sorts by country, then by name within each country.</p>",
+      "task": "Show <code>name</code> and <code>signup_date</code> for all users, <b>earliest signup first</b>. If two users signed up the same day, sort them by <code>name</code>.",
+      "hints": [
+        "<code>ORDER BY</code> goes at the end. You need two sort columns.",
+        "<code>ORDER BY signup_date, name</code>"
+      ]
+    },
+    "limit": {
+      "title": "Top N with LIMIT",
+      "explain": "<p><code>LIMIT n</code> keeps only the first <i>n</i> rows. Combined with <code>ORDER BY ... DESC</code> it answers \"top N\" questions:</p>\n<pre>SELECT * FROM orders ORDER BY order_date DESC LIMIT 3;  -- 3 most recent orders</pre>\n<p>Order matters: SQL sorts first, then applies the limit.</p>",
+      "task": "Show the <code>order_id</code>, <code>order_date</code> and <code>amount</code> of the <b>5 most recent</b> orders. Break ties by <code>order_id</code> (highest first).",
+      "hints": [
+        "Sort newest first, then cut the list.",
+        "<code>ORDER BY order_date DESC, order_id DESC LIMIT 5</code>"
+      ]
+    },
+    "distinct": {
+      "title": "DISTINCT",
+      "explain": "<p><code>SELECT DISTINCT</code> removes duplicate rows from the result.</p>\n<pre>SELECT DISTINCT country FROM users;</pre>\n<p>With several columns, it removes rows where <i>all</i> the listed columns are the same.</p>",
+      "task": "List each <b>different</b> <code>feature</code> that appears in <code>feature_usage</code>, once each.",
+      "hints": [
+        "Put <code>DISTINCT</code> right after <code>SELECT</code>.",
+        "<code>SELECT DISTINCT feature FROM feature_usage;</code>"
+      ]
+    },
+    "alias-calc": {
+      "title": "Calculations and aliases",
+      "explain": "<p>You can compute new columns with <code>+ - * /</code>, and name them with <code>AS</code>:</p>\n<pre>SELECT order_id, amount, amount * 0.2 AS platform_fee FROM orders;</pre>\n<p><code>ROUND(x, 2)</code> rounds to 2 decimals. Watch out: in SQLite, dividing two whole numbers gives a whole number (<code>7 / 2 = 3</code>). Multiply by <code>1.0</code> to get decimals (<code>7 * 1.0 / 2 = 3.5</code>).</p>",
+      "task": "For every <code>'refunded'</code> order, show <code>order_id</code>, <code>amount</code>, and a column <code>amount_cents</code> with the amount in cents (amount × 100).",
+      "hints": [
+        "Multiply the <code>amount</code> column and give it a name with <code>AS</code>.",
+        "<code>SELECT order_id, amount, amount * 100 AS amount_cents FROM orders WHERE status = 'refunded';</code>"
+      ]
+    },
+    "count": {
+      "title": "COUNT",
+      "explain": "<p>Aggregate functions squash many rows into one value.</p>\n<ul>\n<li><code>COUNT(*)</code> counts rows.</li>\n<li><code>COUNT(column)</code> counts rows where that column is <b>not NULL</b>.</li>\n<li><code>COUNT(DISTINCT column)</code> counts unique non-NULL values.</li>\n</ul>\n<pre>SELECT COUNT(*) AS total_users FROM users;</pre>",
+      "task": "How many users are on the <code>'free'</code> plan? Return a single number.",
+      "hints": [
+        "Filter with <code>WHERE</code> first, then count.",
+        "<code>SELECT COUNT(*) FROM users WHERE plan = 'free';</code>"
+      ]
+    },
+    "sum-avg": {
+      "title": "SUM, AVG, MIN, MAX",
+      "explain": "<p><code>SUM</code>, <code>AVG</code>, <code>MIN</code> and <code>MAX</code> work on numeric columns (MIN/MAX also work on dates and text). You can use several in one query:</p>\n<pre>SELECT MIN(amount), MAX(amount), AVG(amount) FROM orders;</pre>\n<p>Revenue questions almost always need a filter, because refunded or pending orders usually shouldn't count.</p>",
+      "task": "Return two numbers for <code>'completed'</code> orders only: total revenue (<code>SUM</code> of amount) and the average order value (<code>AVG</code> of amount).",
+      "hints": [
+        "Two aggregate functions separated by a comma.",
+        "<code>SELECT SUM(amount), AVG(amount) FROM orders WHERE status = 'completed';</code>"
+      ]
+    },
+    "group-by": {
+      "title": "GROUP BY",
+      "explain": "<p><code>GROUP BY</code> splits rows into groups and runs the aggregate once per group. \"How many users per plan?\" becomes:</p>\n<pre>SELECT plan, COUNT(*) AS users\nFROM users\nGROUP BY plan;</pre>\n<p>Rule of thumb: every column in <code>SELECT</code> should either be in <code>GROUP BY</code> or be inside an aggregate function.</p>",
+      "task": "Show each <code>acquisition_source</code> and how many users came from it.",
+      "hints": [
+        "Group by the column you're counting per.",
+        "<code>GROUP BY acquisition_source</code>"
+      ]
+    },
+    "group-multi": {
+      "title": "Several metrics per group",
+      "explain": "<p>You can compute several aggregates per group and sort by one of them. You can refer to an alias in <code>ORDER BY</code>:</p>\n<pre>SELECT status, COUNT(*) AS n, SUM(amount) AS total\nFROM orders\nGROUP BY status\nORDER BY total DESC;</pre>",
+      "task": "For each order <code>status</code>, show the status, the number of orders, and the total amount. Sort by number of orders, <b>most first</b>.",
+      "hints": [
+        "Use <code>COUNT(*)</code> and <code>SUM(amount)</code>, then <code>GROUP BY status</code>.",
+        "<code>SELECT status, COUNT(*) AS n, SUM(amount) FROM orders GROUP BY status ORDER BY n DESC;</code>"
+      ]
+    },
+    "having": {
+      "title": "HAVING",
+      "explain": "<p><code>WHERE</code> filters <b>rows before</b> grouping. <code>HAVING</code> filters <b>groups after</b> aggregating. So conditions on <code>COUNT</code>, <code>SUM</code> etc. go in <code>HAVING</code>.</p>\n<pre>SELECT country, COUNT(*) AS n\nFROM users\nWHERE plan != 'free'\nGROUP BY country\nHAVING COUNT(*) &gt;= 2;</pre>\n<p>The order of clauses is always: <code>SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ... LIMIT</code>.</p>",
+      "task": "Which countries have <b>more than 3</b> users? Show the <code>country</code> and its user count. (Ignore users with no country.)",
+      "hints": [
+        "Group by country, then filter groups with <code>HAVING</code>. Remove NULL countries with <code>WHERE</code>.",
+        "<code>WHERE country IS NOT NULL GROUP BY country HAVING COUNT(*) &gt; 3</code>"
+      ]
+    },
+    "inner-join": {
+      "title": "INNER JOIN",
+      "explain": "<p>Data is split across tables. <code>orders</code> only stores a <code>user_id</code>; the user's name lives in <code>users</code>. A <b>JOIN</b> matches rows from two tables using a shared column.</p>\n<pre>SELECT o.order_id, u.name\nFROM orders o\nJOIN users u ON o.user_id = u.user_id;</pre>\n<p><code>o</code> and <code>u</code> are short <b>table aliases</b>. <code>JOIN</code> (same as <code>INNER JOIN</code>) keeps only rows that have a match in both tables.</p>",
+      "task": "Show every order's <code>order_id</code>, the user's <code>name</code>, and the order <code>amount</code>.",
+      "hints": [
+        "Join <code>users u</code> on the shared <code>user_id</code> column.",
+        "<code>JOIN users u ON o.user_id = u.user_id</code>"
+      ]
+    },
+    "join-group": {
+      "title": "JOIN + GROUP BY",
+      "explain": "<p>Joins and aggregates combine naturally. \"Revenue per country\" means: join orders to users, then group by country.</p>\n<pre>SELECT u.country, SUM(o.amount) AS revenue\nFROM orders o\nJOIN users u ON o.user_id = u.user_id\nWHERE o.status = 'completed'\nGROUP BY u.country;</pre>",
+      "task": "Show each <code>plan</code> and the total <code>amount</code> of <b>completed</b> orders from users on that plan, highest revenue first.",
+      "hints": [
+        "Join, filter on status, group by plan, then sort.",
+        "<code>... JOIN users u ON o.user_id = u.user_id WHERE o.status = 'completed' GROUP BY u.plan ORDER BY revenue DESC</code>"
+      ]
+    },
+    "left-join": {
+      "title": "LEFT JOIN",
+      "explain": "<p>A <code>LEFT JOIN</code> keeps <b>every</b> row from the left table, even if there's no match on the right. Missing right-side columns become <code>NULL</code>.</p>\n<pre>SELECT u.name, o.order_id\nFROM users u\nLEFT JOIN orders o ON o.user_id = u.user_id;</pre>\n<p>Classic trick: to find rows with <i>no</i> match, LEFT JOIN and keep only rows where the right side <code>IS NULL</code>.</p>",
+      "task": "Find users who have <b>never placed an order</b>. Show their <code>user_id</code> and <code>name</code>.",
+      "hints": [
+        "LEFT JOIN orders, then keep rows where the order side is NULL.",
+        "<code>LEFT JOIN orders o ON o.user_id = u.user_id WHERE o.order_id IS NULL</code>"
+      ]
+    },
+    "left-join-count": {
+      "title": "Counting with LEFT JOIN",
+      "explain": "<p>If you want to include zeros (\"users with 0 orders\"), use a LEFT JOIN and count a column from the right table. <code>COUNT(o.order_id)</code> skips NULLs, so unmatched users get 0. <code>COUNT(*)</code> would wrongly give them 1.</p>",
+      "task": "Show every user's <code>name</code> and how many orders they've placed, <b>including users with 0 orders</b>.",
+      "hints": [
+        "LEFT JOIN orders, then GROUP BY the user.",
+        "<code>LEFT JOIN orders o ON o.user_id = u.user_id GROUP BY u.user_id, u.name</code>"
+      ]
+    },
+    "self-join": {
+      "title": "Self join",
+      "explain": "<p>A table can be joined to <b>itself</b>. In <code>employees</code>, <code>manager_id</code> points to another row in the same table. Give the table two aliases:</p>\n<pre>SELECT e.name AS employee, m.name AS manager\nFROM employees e\nJOIN employees m ON e.manager_id = m.emp_id;</pre>",
+      "task": "Show each employee's <code>name</code> and their manager's name, for employees whose manager earns more than <b>200000</b>.",
+      "hints": [
+        "Join <code>employees m</code> on <code>e.manager_id = m.emp_id</code>, then filter on the manager's salary.",
+        "<code>JOIN employees m ON e.manager_id = m.emp_id WHERE m.salary &gt; 200000</code>"
+      ]
+    },
+    "subquery-where": {
+      "title": "Subquery in WHERE",
+      "explain": "<p>A <b>subquery</b> is a query in parentheses used inside another query. Here the inner query computes one number, which the outer query compares against:</p>\n<pre>SELECT * FROM employees\nWHERE salary &gt; (SELECT AVG(salary) FROM employees);</pre>",
+      "task": "Show the <code>order_id</code> and <code>amount</code> of orders whose amount is <b>above the average</b> order amount (all orders).",
+      "hints": [
+        "Compare <code>amount</code> to <code>(SELECT AVG(amount) FROM orders)</code>.",
+        "<code>WHERE amount &gt; (SELECT AVG(amount) FROM orders)</code>"
+      ]
+    },
+    "subquery-in": {
+      "title": "IN (subquery)",
+      "explain": "<p>A subquery can return a list for <code>IN</code> or <code>NOT IN</code>:</p>\n<pre>SELECT name FROM users\nWHERE user_id IN (SELECT user_id FROM orders WHERE amount &gt; 100);</pre>\n<p>This is often easier to read than a join when you only need to check \"does a match exist?\".</p>",
+      "task": "Show the <code>name</code> of every user who has used the <code>'ai_assistant'</code> feature at least once.",
+      "hints": [
+        "The subquery should return user_ids from <code>feature_usage</code> filtered to that feature.",
+        "<code>WHERE user_id IN (SELECT user_id FROM feature_usage WHERE feature = 'ai_assistant')</code>"
+      ]
+    },
+    "case": {
+      "title": "CASE WHEN",
+      "explain": "<p><code>CASE</code> is SQL's if/else. It's checked top to bottom and the first true branch wins:</p>\n<pre>SELECT name,\n  CASE WHEN salary &gt;= 150000 THEN 'high'\n       WHEN salary &gt;= 120000 THEN 'mid'\n       ELSE 'low' END AS band\nFROM employees;</pre>\n<p>A very common interview pattern is putting CASE inside an aggregate to count subsets: <code>SUM(CASE WHEN status = 'refunded' THEN 1 ELSE 0 END)</code>.</p>",
+      "task": "Label every order by size: <code>'small'</code> if amount &lt; 50, <code>'medium'</code> if amount &lt; 150, otherwise <code>'large'</code>. Show each size label and how many orders fall into it.",
+      "hints": [
+        "Finish the CASE with another WHEN and an ELSE, then <code>GROUP BY size</code>.",
+        "<code>CASE WHEN amount &lt; 50 THEN 'small' WHEN amount &lt; 150 THEN 'medium' ELSE 'large' END AS size ... GROUP BY size</code>"
+      ]
+    },
+    "cte": {
+      "title": "WITH (CTEs)",
+      "explain": "<p>A <b>CTE</b> (<code>WITH</code> clause) names a subquery so you can use it like a table. It makes multi-step logic readable, and interviewers appreciate it.</p>\n<pre>WITH spend AS (\n  SELECT user_id, SUM(amount) AS total\n  FROM orders\n  GROUP BY user_id\n)\nSELECT * FROM spend WHERE total &gt; 100;</pre>",
+      "task": "Using a CTE, find users whose total <b>completed</b> spend is more than <b>200</b>. Show their <code>name</code> and total spend.",
+      "hints": [
+        "Join the <code>spend</code> CTE to <code>users</code> to get names, then filter on total.",
+        "<code>SELECT u.name, s.total FROM spend s JOIN users u ON u.user_id = s.user_id WHERE s.total &gt; 200;</code>"
+      ]
+    },
+    "dates": {
+      "title": "Working with dates",
+      "explain": "<p>In SQLite, dates are text like <code>'2024-03-15'</code>. <code>strftime</code> pulls parts out of them:</p>\n<ul>\n<li><code>strftime('%Y-%m', signup_date)</code> gives <code>'2024-03'</code> (year-month)</li>\n<li><code>strftime('%Y', ...)</code> year, <code>strftime('%m', ...)</code> month</li>\n<li><code>date('2024-03-15', '+7 days')</code> does date arithmetic</li>\n</ul>\n<p>Other databases use <code>DATE_TRUNC</code> or <code>EXTRACT</code> for the same idea. In an interview, just say which one you'd use.</p>",
+      "task": "Count signups <b>per month</b>. Show the month as <code>'YYYY-MM'</code> and the number of signups, in month order.",
+      "hints": [
+        "Group by the month expression, then sort.",
+        "<code>GROUP BY month ORDER BY month</code>"
+      ]
+    },
+    "conversion": {
+      "title": "Conversion rate",
+      "explain": "<p>\"What percent of signups converted to paying?\" is a PM classic. Break it into: count users who did the thing, divide by all users.</p>\n<pre>SELECT 100.0 * COUNT(DISTINCT o.user_id) / COUNT(DISTINCT u.user_id) AS pct\nFROM users u\nLEFT JOIN orders o ON o.user_id = u.user_id;</pre>\n<p>Note the <code>100.0</code>: it avoids integer division. Use <code>DISTINCT</code> because a user can have many orders.</p>",
+      "task": "What percentage of users have at least one <b>completed</b> order? Return one number (e.g. 66.67), rounded to 2 decimals.",
+      "hints": [
+        "Careful: if you filter <code>status</code> in WHERE, users without orders disappear. Put the status condition in the <code>ON</code> clause instead.",
+        "<code>ON o.user_id = u.user_id AND o.status = 'completed'</code>"
+      ]
+    },
+    "window-rank": {
+      "title": "Ranking (window functions)",
+      "explain": "<p><b>Window functions</b> calculate across related rows without collapsing them like GROUP BY does.</p>\n<pre>SELECT name, department, salary,\n  RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS rnk\nFROM employees;</pre>\n<ul>\n<li><code>PARTITION BY</code> restarts the ranking for each department.</li>\n<li><code>ROW_NUMBER()</code> gives 1,2,3 with no ties; <code>RANK()</code> gives ties the same number and skips (1,1,3); <code>DENSE_RANK()</code> doesn't skip (1,1,2).</li>\n</ul>",
+      "task": "Rank all employees by salary, <b>highest first</b>, across the whole company. Show <code>name</code>, <code>salary</code>, and the rank from <code>RANK()</code>, sorted by rank.",
+      "hints": [
+        "Inside <code>OVER ( )</code> put <code>ORDER BY salary DESC</code>. No PARTITION needed since it's company-wide.",
+        "<code>RANK() OVER (ORDER BY salary DESC) AS rnk ... ORDER BY rnk</code>"
+      ]
+    },
+    "top-per-group": {
+      "title": "Top 1 per group",
+      "explain": "<p>\"Highest paid person in each department\" is a very common question. Rank inside each group with a window function in a CTE, then keep rank 1:</p>\n<pre>WITH ranked AS (\n  SELECT *, ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS rn\n  FROM employees\n)\nSELECT * FROM ranked WHERE rn = 1;</pre>",
+      "task": "Show the <code>department</code>, <code>name</code> and <code>salary</code> of the <b>highest paid employee in each department</b>.",
+      "hints": [
+        "Select from <code>ranked</code> and keep only <code>rn = 1</code>.",
+        "<code>SELECT department, name, salary FROM ranked WHERE rn = 1;</code>"
+      ]
+    },
+    "running-total": {
+      "title": "Running totals",
+      "explain": "<p>A window <code>SUM</code> with <code>ORDER BY</code> gives a running (cumulative) total, useful for growth charts:</p>\n<pre>SELECT month, revenue,\n  SUM(revenue) OVER (ORDER BY month) AS cumulative\nFROM monthly;</pre>\n<p>You can combine it with a CTE that first aggregates by month.</p>",
+      "task": "Show each month (<code>'YYYY-MM'</code> from <code>order_date</code>), the revenue from <b>completed</b> orders that month, and the <b>cumulative</b> revenue so far. Month order.",
+      "hints": [
+        "Use <code>SUM(revenue) OVER (ORDER BY month)</code> in the outer query.",
+        "<code>SELECT month, revenue, SUM(revenue) OVER (ORDER BY month) FROM monthly ORDER BY month;</code>"
+      ]
+    },
+    "engagement": {
+      "title": "Engagement metrics",
+      "explain": "<p>PMs care about how many <b>unique users</b> use each feature, not just event counts. <code>COUNT(DISTINCT user_id)</code> is your friend. A common follow-up is \"average usage per active user\" = total / unique users.</p>",
+      "task": "For each <code>feature</code>, show the number of <b>unique users</b> and the <b>total minutes</b> used. Sort by unique users (most first), then feature name.",
+      "hints": [
+        "<code>COUNT(DISTINCT user_id)</code> and <code>SUM(minutes_used)</code>, grouped by feature.",
+        "<code>... GROUP BY feature ORDER BY users DESC, feature</code>"
+      ]
+    },
+    "mock-second-salary": {
+      "title": "Q1. Second highest salary",
+      "task": "Return the <b>second highest</b> distinct salary in the company, as a single number.",
+      "hints": [
+        "Find the max salary that is less than the overall max. Or use ORDER BY with LIMIT/OFFSET on DISTINCT salaries.",
+        "<code>SELECT MAX(salary) FROM employees WHERE salary &lt; (SELECT MAX(salary) FROM employees);</code>"
+      ]
+    },
+    "mock-inactive": {
+      "title": "Q2. Signed up, never engaged",
+      "task": "Which users have <b>never used any feature</b>? Return their <code>user_id</code> and <code>name</code>.",
+      "hints": [
+        "Anti-join: LEFT JOIN and look for NULLs, or use <code>NOT IN</code>.",
+        "<code>SELECT u.user_id, u.name FROM users u LEFT JOIN feature_usage f ON f.user_id = u.user_id WHERE f.event_id IS NULL;</code>"
+      ]
+    },
+    "mock-aov-source": {
+      "title": "Q3. AOV by channel",
+      "task": "Marketing wants to know which acquisition channel brings the best customers. For each <code>acquisition_source</code>, return the <b>average completed order value</b>, rounded to 2 decimals. Highest first.",
+      "hints": [
+        "Join orders to users, filter completed, group by source, AVG the amount.",
+        "<code>SELECT u.acquisition_source, ROUND(AVG(o.amount), 2) AS aov FROM orders o JOIN users u ON u.user_id = o.user_id WHERE o.status = 'completed' GROUP BY 1 ORDER BY aov DESC;</code>"
+      ]
+    },
+    "mock-power-users": {
+      "title": "Q4. Power users",
+      "task": "Find users with <b>3 or more orders</b> (any status). Return <code>name</code> and their order count, most orders first, then by name.",
+      "hints": [
+        "GROUP BY user and filter with HAVING.",
+        "<code>... GROUP BY u.user_id, u.name HAVING COUNT(*) &gt;= 3 ORDER BY n DESC, u.name</code>"
+      ]
+    },
+    "mock-refund-rate": {
+      "title": "Q5. Refund rate by plan",
+      "task": "For each <code>plan</code>, what percentage of its orders were <code>'refunded'</code>? Return the plan and the refund rate as a percentage rounded to 1 decimal, sorted by plan name.",
+      "hints": [
+        "Count refunded orders with <code>SUM(CASE WHEN ... THEN 1 ELSE 0 END)</code> and divide by <code>COUNT(*)</code>.",
+        "<code>ROUND(100.0 * SUM(CASE WHEN o.status = 'refunded' THEN 1 ELSE 0 END) / COUNT(*), 1)</code>"
+      ]
+    },
+    "mock-top-feature-pro": {
+      "title": "Q6. Favourite feature of paying users",
+      "task": "Among users on a <b>paid plan</b> (<code>'pro'</code> or <code>'enterprise'</code>), which feature has the most total <code>minutes_used</code>? Return the feature and its total minutes (just the top one).",
+      "hints": [
+        "Join, filter plan with IN, group by feature, sort and LIMIT 1.",
+        "<code>... WHERE u.plan IN ('pro','enterprise') GROUP BY f.feature ORDER BY minutes DESC LIMIT 1</code>"
+      ]
+    }
+  },
+  "tables": {
+    "users": "people who signed up",
+    "orders": "things people bought",
+    "feature_usage": "who used which feature"
+  }
+}

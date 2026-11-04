@@ -6,13 +6,18 @@
   const $ = (id) => document.getElementById(id);
 
   // ---------- Flatten curriculum ----------
-  const lessons = [];
-  LEVELS.forEach((level, li) => {
-    level.lessons.forEach((lesson, i) => {
-      lessons.push(Object.assign({}, lesson, { level, levelIndex: li, indexInLevel: i }));
+  // Built in boot(), after the language file has filled in the lesson text.
+  let lessons = [];
+  let byId = {};
+  function buildLessons() {
+    lessons = [];
+    LEVELS.forEach((level, li) => {
+      level.lessons.forEach((lesson, i) => {
+        lessons.push(Object.assign({}, lesson, { level, levelIndex: li, indexInLevel: i }));
+      });
     });
-  });
-  const byId = Object.fromEntries(lessons.map((l) => [l.id, l]));
+    byId = Object.fromEntries(lessons.map((l) => [l.id, l]));
+  }
 
   // ---------- Progress (localStorage, best effort) ----------
   function loadState() {
@@ -83,28 +88,28 @@
   }
 
   function renderTable(result) {
-    if (!result) return `<div class="result-meta">Query ran. No rows to show.</div>`;
+    if (!result) return `<div class="result-meta">${t("results.ranNoRows")}</div>`;
     const rows = result.values;
     const shown = rows.slice(0, MAX_ROWS_SHOWN);
     const head = result.columns.map((c) => `<th>${esc(c)}</th>`).join("");
     const body = shown.map((r) =>
       "<tr>" + r.map((v) => v === null ? `<td class="null">NULL</td>` : `<td>${esc(typeof v === "number" && !Number.isInteger(v) ? +v.toFixed(4) : v)}</td>`).join("") + "</tr>"
     ).join("");
-    const meta = `${rows.length} row${rows.length === 1 ? "" : "s"}` + (rows.length > MAX_ROWS_SHOWN ? ` (showing first ${MAX_ROWS_SHOWN})` : "");
+    const meta = tn("results.rows", rows.length) + (rows.length > MAX_ROWS_SHOWN ? " " + t("results.truncated", { n: MAX_ROWS_SHOWN }) : "");
     return `<div class="result-meta">${meta}</div><div class="table-scroll"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
   }
 
   function renderSchema(tables, container, resultsEl) {
     container.innerHTML = tables.map((t) => {
       const info = tableColumns(t);
-      return `<div class="schema-table"><b>${t}</b> <span class="muted">(${info.count} rows)</span>
-        <button class="peek" data-table="${t}">preview</button>
+      return `<div class="schema-table"><b>${t}</b> <span class="muted">${I18N.t("schema.rows", { n: info.count })}</span>
+        <button class="peek" data-table="${t}">${I18N.t("schema.preview")}</button>
         <div class="schema-cols">${info.cols.map((c) => `<span>${c.name} <i>${c.type.toLowerCase()}</i></span>`).join("")}</div></div>`;
     }).join("");
     container.querySelectorAll(".peek").forEach((b) => {
       b.addEventListener("click", () => {
         const { result } = runQuery(`SELECT * FROM ${b.dataset.table} LIMIT 10`);
-        resultsEl.innerHTML = `<div class="result-meta">Preview of <b>${b.dataset.table}</b> (first 10 rows)</div>` + renderTable(result);
+        resultsEl.innerHTML = `<div class="result-meta">${t("schema.previewOf", { table: b.dataset.table })}</div>` + renderTable(result);
       });
     });
   }
@@ -127,9 +132,9 @@
           <div class="level-blurb">${esc(level.blurb)}</div>
         </div>${items}</div>`;
     }).join("") + `<div class="sidebar-foot">
-        Levels unlock when you finish the one before.
-        <br><button id="unlockAll">${state.unlockAll ? "Re-lock levels" : "Unlock everything"}</button>
-        · <button id="resetProgress">Reset progress</button></div>`;
+        ${t("sidebar.unlockNote")}
+        <br><button id="unlockAll">${state.unlockAll ? t("sidebar.relock") : t("sidebar.unlockAll")}</button>
+        · <button id="resetProgress">${t("sidebar.reset")}</button></div>`;
 
     nav.querySelectorAll(".lesson-link").forEach((b) => b.addEventListener("click", () => {
       location.hash = "lesson/" + b.dataset.id;
@@ -137,7 +142,7 @@
     }));
     $("unlockAll").addEventListener("click", () => { state.unlockAll = !state.unlockAll; saveState(); renderSidebar(); updateNav(); });
     $("resetProgress").addEventListener("click", () => {
-      if (!confirm("Clear all progress and saved answers?")) return;
+      if (!confirm(t("sidebar.resetConfirm"))) return;
       state.done = {}; state.drafts = {}; state.unlockAll = false; saveState();
       location.hash = "lesson/" + lessons[0].id;
       route(true);
@@ -159,6 +164,10 @@
     window.scrollTo(0, 0);
   }
 
+  function crumbText(lesson) {
+    return t("lesson.crumb", { level: lesson.levelIndex + 1, title: lesson.level.title, n: lesson.indexInLevel + 1, total: lesson.level.lessons.length });
+  }
+
   function openLesson(lesson) {
     if (lesson.type === "concept") return openConcept(lesson);
     current = lesson;
@@ -167,7 +176,7 @@
     expectedCache = null;
     const level = lesson.level;
 
-    $("crumb").textContent = `Level ${lesson.levelIndex + 1} · ${level.title} · ${lesson.indexInLevel + 1} of ${level.lessons.length}`;
+    $("crumb").textContent = crumbText(lesson);
     $("lessonTitle").textContent = lesson.title;
     $("explain").innerHTML = lesson.explain || (level.mock ? `<p class="muted">${esc(level.blurb)}</p>` : "");
     $("taskText").innerHTML = lesson.task;
@@ -183,7 +192,7 @@
     showView("lessonView");
     renderSidebar();
     updateNav();
-    if (state.done[lesson.id]) setFeedback("ok", "✓ You've already solved this one. Feel free to try it again.");
+    if (state.done[lesson.id]) setFeedback("ok", t("lesson.alreadySolved"));
   }
 
   function updateHintButton() {
@@ -191,8 +200,8 @@
     const total = current.hints.length;
     const lockedForMock = current.level.mock && failedChecks === 0;
     b.disabled = hintsShown >= total || lockedForMock;
-    b.title = lockedForMock ? "In the mock interview, hints unlock after one attempt" : "";
-    b.textContent = hintsShown >= total ? "No more hints" : `Hint (${hintsShown}/${total})`;
+    b.title = lockedForMock ? t("lesson.mockHintLocked") : "";
+    b.textContent = hintsShown >= total ? t("lesson.noMoreHints") : t("lesson.hint", { shown: hintsShown, total });
   }
 
   function idx(lesson) { return lessons.indexOf(lesson); }
@@ -204,7 +213,7 @@
     $("prevBtn").disabled = !prev;
     $("nextBtn").hidden = !next;
     $("nextBtn").disabled = !next || !levelUnlocked(next.levelIndex);
-    $("nextBtn").title = next && !levelUnlocked(next.levelIndex) ? "Finish this level to unlock the next one" : "";
+    $("nextBtn").title = next && !levelUnlocked(next.levelIndex) ? t("lesson.nextLocked") : "";
     $("expectedBtn").hidden = !!current.level.mock && !state.done[current.id] && failedChecks < 2;
   }
 
@@ -218,7 +227,7 @@
   function getExpected() {
     if (!expectedCache) {
       const r = runQuery(current.solution);
-      if (r.error) throw new Error("Lesson solution failed: " + r.error);
+      if (r.error) throw new Error(t("lesson.solutionFailed", { error: r.error }));
       expectedCache = r.result;
     }
     return expectedCache;
@@ -233,13 +242,13 @@
 
   function onCheck() {
     const sql = $("editor").value;
-    if (!sql.trim()) return setFeedback("info", "Write a query first.");
+    if (!sql.trim()) return setFeedback("info", t("lesson.writeFirst"));
     const { result, error } = runQuery(sql);
     if (error) {
       $("results").innerHTML = `<div class="error">⚠ ${esc(error)}</div>`;
       failedChecks++;
       updateHintButton(); updateNav();
-      return setFeedback("bad", "Your query has an error. Read the message below. Typos and missing commas are the usual suspects.");
+      return setFeedback("bad", t("lesson.queryError"));
     }
     $("results").innerHTML = renderTable(result);
     const verdict = compareResults(getExpected(), result, !!current.ordered);
@@ -248,11 +257,11 @@
       state.done[current.id] = true;
       saveState();
       const li = current.levelIndex;
-      let msg = "✓ Correct! Nice work.";
+      let msg = t("lesson.correct");
       if (firstTime && levelDone(li)) {
         msg = li + 1 < LEVELS.length
-          ? `🎉 Correct, and that finishes <b>${esc(current.level.title)}</b>! Level ${li + 2} is unlocked.`
-          : "🏆 Correct! You've finished the mock interview. You're ready. Good luck!";
+          ? t("lesson.levelDone", { level: esc(current.level.title), next: li + 2 })
+          : t("lesson.allDone");
       }
       setFeedback("ok", msg);
       renderSidebar();
@@ -261,7 +270,8 @@
       failedChecks++;
       updateHintButton();
       updateNav();
-      setFeedback("bad", "Not quite. " + esc(verdict.reason) + (hintsShown < current.hints.length && !$("hintBtn").disabled ? " Try a hint if you're stuck." : ""));
+      const reason = verdict.count !== undefined ? tn("check." + verdict.code, verdict.count, verdict.params) : t("check." + verdict.code, verdict.params);
+      setFeedback("bad", t("lesson.notQuite") + " " + esc(reason) + (hintsShown < current.hints.length && !$("hintBtn").disabled ? " " + t("lesson.tryHint") : ""));
     }
   }
 
@@ -271,7 +281,7 @@
     const isLast = hintsShown === current.hints.length;
     const el = document.createElement("div");
     el.className = "hint";
-    el.innerHTML = `<b>${isLast ? "Solution" : "Hint " + hintsShown}:</b> ${current.hints[hintsShown - 1]}`;
+    el.innerHTML = `<b>${isLast ? t("lesson.solutionLabel") : t("lesson.hintLabel", { n: hintsShown })}</b> ${current.hints[hintsShown - 1]}`;
     $("hints").appendChild(el);
     updateHintButton();
   }
@@ -279,7 +289,7 @@
   function onExpected() {
     const box = $("expected");
     if (!box.hidden) { box.hidden = true; return; }
-    box.innerHTML = `<div class="label">Expected output${current.ordered ? " (order matters)" : " (any row order is fine)"}</div>` + renderTable(getExpected());
+    box.innerHTML = `<div class="label">${current.ordered ? t("lesson.expectedOrdered") : t("lesson.expectedUnordered")}</div>` + renderTable(getExpected());
     box.hidden = false;
   }
 
@@ -291,14 +301,14 @@
     cQueue = lesson.steps.map((_, i) => i);
     cDoneCount = 0;
     cMistakes = 0;
-    $("cCrumb").textContent = `Level ${lesson.levelIndex + 1} · ${lesson.level.title} · ${lesson.indexInLevel + 1} of ${lesson.level.lessons.length}`;
+    $("cCrumb").textContent = crumbText(lesson);
     $("cTitle").textContent = lesson.title;
     showView("conceptView");
     renderSidebar();
     renderConceptStep();
   }
 
-  function miniTableHtml(name, v, hitMode) {
+  function miniTableHtml(name, v, hitMode, label) {
     const t = MINI_TABLES[name];
     const hl = v.highlight || {};
     const keyIcon = (col) => !v.keys ? "" : col === t.columns[0] ? " 🔑" : (col === "user_id" && name !== "users" ? " 🔗" : "");
@@ -317,7 +327,7 @@
     }).join("");
     return `<div class="mini"><div class="mini-name">${t.emoji} ${name}</div>
       <div class="mini-scroll"><table class="mini-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>
-      ${v.label ? `<div class="mini-label">${v.label}</div>` : ""}</div>`;
+      ${label ? `<div class="mini-label">${label}</div>` : ""}</div>`;
   }
 
   function visualHtml(step) {
@@ -342,10 +352,10 @@
           const icon = ci === 0 ? "🔑" : c === "user_id" ? "🔗" : "";
           return `<div class="scol" data-table="${n}" data-col="${c}"${tapping ? " data-hit" : ""}><span>${icon} ${c}</span><small>${t.types[ci]}</small></div>`;
         }).join("")}</div>`;
-      }).join("")}</div><div class="muted small">🔑 primary key · 🔗 foreign key (points to users.user_id)</div>`;
+      }).join("")}</div><div class="muted small">${t("quiz.keysLegend")}</div>`;
     }
-    return `<div class="minis">${v.tables.map((n) => miniTableHtml(n, v, tapping)).join("")}</div>` +
-      (v.keys ? `<div class="muted small">🔑 primary key · 🔗 foreign key (points to users.user_id)</div>` : "");
+    return `<div class="minis">${v.tables.map((n) => miniTableHtml(n, v, tapping, step.label)).join("")}</div>` +
+      (v.keys ? `<div class="muted small">${t("quiz.keysLegend")}</div>` : "");
   }
 
   function renderConceptStep() {
@@ -357,11 +367,11 @@
     const card = $("cCard");
     let html = "";
     if (step.kind === "learn") {
-      html = `<div class="c-tag">Learn</div><div class="explain">${step.html}</div>${visualHtml(step)}`;
+      html = `<div class="c-tag">${t("quiz.learn")}</div><div class="explain">${step.html}</div>${visualHtml(step)}`;
     } else if (step.kind === "tap") {
-      html = `<div class="c-tag quiz">Quick quiz · tap it</div><div class="c-prompt">${step.prompt}</div>${visualHtml(step)}`;
+      html = `<div class="c-tag quiz">${t("quiz.tapTag")}</div><div class="c-prompt">${step.prompt}</div>${visualHtml(step)}`;
     } else {
-      html = `<div class="c-tag quiz">Quick quiz</div><div class="c-prompt">${step.prompt}</div>${visualHtml(step)}
+      html = `<div class="c-tag quiz">${t("quiz.choiceTag")}</div><div class="c-prompt">${step.prompt}</div>${visualHtml(step)}
         <div class="options">${step.options.map((o, i) => `<button class="option${step.mono ? " mono" : ""}" data-hit data-option="${i}">${esc(o)}</button>`).join("")}</div>`;
     }
     card.innerHTML = html;
@@ -370,9 +380,9 @@
     card.classList.add("pop");
     const bar = $("cBar");
     bar.className = "c-bar";
-    $("cMsg").innerHTML = step.kind === "learn" ? "" : `<span class="muted">${step.kind === "tap" ? "Tap your answer above" : "Pick one answer"}</span>`;
+    $("cMsg").innerHTML = step.kind === "learn" ? "" : `<span class="muted">${step.kind === "tap" ? t("quiz.tapPrompt") : t("quiz.choicePrompt")}</span>`;
     $("cContinue").hidden = step.kind !== "learn";
-    $("cContinue").textContent = "Continue";
+    $("cContinue").textContent = t("quiz.continue");
     card.querySelectorAll("[data-hit]").forEach((el) => el.addEventListener("click", () => onConceptHit(el)));
   }
 
@@ -416,10 +426,10 @@
     const bar = $("cBar");
     bar.className = "c-bar " + (ok ? "ok" : "bad");
     $("cMsg").innerHTML = ok
-      ? `<b>✓</b> ${step.right || "Correct!"}`
-      : `<b>Not quite.</b> ${step.wrong || step.right || ""}${step.kind === "choice" ? "" : " We'll come back to this one."}`;
+      ? `<b>✓</b> ${step.right || t("quiz.correct")}`
+      : `<b>${t("quiz.notQuite")}</b> ${step.wrong || step.right || ""}${step.kind === "choice" ? "" : " " + t("quiz.comeBack")}`;
     $("cContinue").hidden = false;
-    $("cContinue").textContent = ok ? "Continue" : "Got it";
+    $("cContinue").textContent = ok ? t("quiz.continue") : t("quiz.gotIt");
     $("cContinue").focus({ preventScroll: true });
   }
 
@@ -446,14 +456,14 @@
     const levelFinished = first && levelDone(current.levelIndex);
     $("cCard").innerHTML = `<div class="c-done">
       <div class="c-done-emoji">${levelFinished ? "🏆" : "🎉"}</div>
-      <h2>${levelFinished ? "Basics complete!" : "Lesson complete!"}</h2>
-      <p>${cMistakes === 0 ? "Perfect, no mistakes!" : `You fixed ${cMistakes} mistake${cMistakes === 1 ? "" : "s"} along the way. That's how learning works.`}</p>
-      ${levelFinished ? "<p>You know the vocabulary now. Next you'll write your first real SQL query.</p>" : ""}
+      <h2>${levelFinished ? t("quiz.basicsDone") : t("quiz.lessonDone")}</h2>
+      <p>${cMistakes === 0 ? t("quiz.perfect") : tn("quiz.mistakes", cMistakes)}</p>
+      ${levelFinished ? `<p>${t("quiz.basicsNext")}</p>` : ""}
     </div>`;
     $("cBar").className = "c-bar ok";
     $("cMsg").innerHTML = "";
     $("cContinue").hidden = !next;
-    $("cContinue").textContent = next ? (next.type === "concept" ? "Next lesson" : "Start writing SQL →") : "";
+    $("cContinue").textContent = next ? (next.type === "concept" ? t("quiz.nextLesson") : t("quiz.startSql")) : "";
   }
 
   // ---------- Editor niceties ----------
@@ -498,7 +508,27 @@
   }
 
   // ---------- Boot ----------
+  function setupLanguagePicker() {
+    const sel = $("langSelect");
+    if (I18N.languages.length < 2) return;
+    sel.innerHTML = I18N.languages.map((l) => `<option value="${l.code}"${l.code === I18N.lang ? " selected" : ""}>${esc(l.name)}</option>`).join("");
+    sel.hidden = false;
+    sel.addEventListener("change", () => I18N.setLang(sel.value));
+  }
+
   async function boot() {
+    try {
+      await I18N.init();
+    } catch (e) {
+      $("loading").innerHTML = `<span class="error">Couldn't load the text files (${esc(e.message || e)}). If you opened index.html directly, serve the folder instead, e.g. python3 -m http.server.</span>`;
+      return;
+    }
+    I18N.applyContent(LEVELS, window.MINI_TABLES);
+    I18N.applyDom();
+    buildLessons();
+    setupLanguagePicker();
+    $("cheatBody").innerHTML = I18N.cheat.map((c) => `<pre>${esc(c)}</pre>`).join("");
+    $("loading").textContent = t("app.loading");
     try {
       SQL = await initSqlJs({ locateFile: (f) => "vendor/" + f });
       const db = new SQL.Database();
@@ -506,7 +536,7 @@
       seedBytes = db.export();
       db.close();
     } catch (e) {
-      $("loading").innerHTML = `<span class="error">Couldn't start the in-browser database: ${esc(e.message || e)}</span>`;
+      $("loading").innerHTML = `<span class="error">${esc(t("app.dbError", { error: e.message || e }))}</span>`;
       return;
     }
     $("loading").hidden = true;

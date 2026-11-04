@@ -1,6 +1,8 @@
 // Result comparison, shared by the app and the test script.
 // Column names are ignored; values must match. Numbers match within 0.01
 // so ROUND(x, 2) and unrounded answers are both accepted.
+// Returns { ok } or { ok: false, code, params }; the app turns code into a
+// message with the "check.<code>" text in the language file.
 (function (root) {
   function norm(v) {
     if (v === null || v === undefined) return "\u0000NULL";
@@ -9,17 +11,12 @@
     return "s:" + String(v);
   }
 
-  // Returns { ok, reason }.
   function compareResults(expected, actual, ordered) {
-    if (!actual) return { ok: false, reason: "Your query didn't return any table. Make sure it's a SELECT." };
+    if (!actual) return { ok: false, code: "noTable" };
     const ec = expected.columns.length, ac = actual.columns.length;
-    if (ec !== ac) {
-      return { ok: false, reason: `Expected ${ec} column${ec === 1 ? "" : "s"}, but your result has ${ac}.` };
-    }
+    if (ec !== ac) return { ok: false, code: "columns", count: ec, params: { expected: ec, actual: ac } };
     const er = expected.values.length, ar = actual.values.length;
-    if (er !== ar) {
-      return { ok: false, reason: `Expected ${er} row${er === 1 ? "" : "s"}, but your result has ${ar}.` };
-    }
+    if (er !== ar) return { ok: false, code: "rows", count: er, params: { expected: er, actual: ar } };
     const toKeys = (rows) => rows.map((r) => r.map(norm).join("\u0001"));
     let e = toKeys(expected.values), a = toKeys(actual.values);
     if (!ordered) {
@@ -30,14 +27,11 @@
       if (e[i] !== a[i]) {
         if (ordered) {
           const se = e.slice().sort().join("|"), sa = a.slice().sort().join("|");
-          if (se === sa) return { ok: false, reason: "Right rows, but in the wrong order. Check your ORDER BY." };
+          if (se === sa) return { ok: false, code: "order" };
         }
-        // Columns in a different order?
         const perm = (rows) => rows.map((r) => r.map(norm).sort().join("\u0001")).sort().join("|");
-        if (perm(expected.values) === perm(actual.values)) {
-          return { ok: false, reason: "Right values, but the columns are in a different order than the task asks." };
-        }
-        return { ok: false, reason: "Same number of rows and columns, but some values are different." };
+        if (perm(expected.values) === perm(actual.values)) return { ok: false, code: "columnOrder" };
+        return { ok: false, code: "values" };
       }
     }
     return { ok: true };

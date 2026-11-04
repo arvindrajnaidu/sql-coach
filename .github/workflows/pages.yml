@@ -21,8 +21,8 @@ jobs:
       - name: Collect site files
         run: |
           mkdir _site
-          cp index.html style.css app.js check.js lessons.js concepts.js data.js _site/
-          cp -r vendor _site/
+          cp index.html style.css app.js check.js i18n.js lessons.js concepts.js data.js _site/
+          cp -r vendor locales _site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
