@@ -64,6 +64,17 @@
         </div>
       </section>
 
+      <section id="conceptView" hidden>
+        <div class="crumb" id="cCrumb"></div>
+        <h1 id="cTitle"></h1>
+        <div class="c-progress" aria-hidden="true"><div id="cProgressFill"></div></div>
+        <div id="cCard" class="c-card"></div>
+        <div id="cBar" class="c-bar">
+          <div id="cMsg" class="c-msg"></div>
+          <button id="cContinue" class="btn primary big">Continue</button>
+        </div>
+      </section>
+
       <section id="sandboxView" hidden>
         <h1>Sandbox</h1>
         <p class="muted">Write any query you like against the practice tables. Nothing here is graded, and the data resets every run.</p>
@@ -140,6 +151,7 @@ date(d, '+7 days')
   <script src="vendor/sql-wasm.js"></script>
   <script src="data.js"></script>
   <script src="lessons.js"></script>
+  <script src="concepts.js"></script>
   <script src="check.js"></script>
   <script src="app.js"></script>
 </body>

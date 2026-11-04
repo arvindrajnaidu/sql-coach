@@ -31,7 +31,9 @@
     return LEVELS[li].lessons.every((l) => state.done[l.id]);
   }
   function levelUnlocked(li) {
-    return li === 0 || state.unlockAll || levelDone(li - 1);
+    if (li === 0 || state.unlockAll || levelDone(li - 1)) return true;
+    // Keep access to anything already started (e.g. progress from before a level was added).
+    return LEVELS.slice(li).some((lv) => lv.lessons.some((l) => state.done[l.id]));
   }
 
   // ---------- Database ----------
@@ -153,11 +155,12 @@
   let expectedCache = null;
 
   function showView(name) {
-    ["lessonView", "sandboxView", "cheatView"].forEach((v) => ($(v).hidden = v !== name));
+    ["lessonView", "conceptView", "sandboxView", "cheatView"].forEach((v) => ($(v).hidden = v !== name));
     window.scrollTo(0, 0);
   }
 
   function openLesson(lesson) {
+    if (lesson.type === "concept") return openConcept(lesson);
     current = lesson;
     hintsShown = 0;
     failedChecks = 0;
@@ -280,6 +283,179 @@
     box.hidden = false;
   }
 
+  // ---------- Concept (quiz) lessons ----------
+  let cQueue = [], cDoneCount = 0, cState = null, cMistakes = 0;
+
+  function openConcept(lesson) {
+    current = lesson;
+    cQueue = lesson.steps.map((_, i) => i);
+    cDoneCount = 0;
+    cMistakes = 0;
+    $("cCrumb").textContent = `Level ${lesson.levelIndex + 1} · ${lesson.level.title} · ${lesson.indexInLevel + 1} of ${lesson.level.lessons.length}`;
+    $("cTitle").textContent = lesson.title;
+    showView("conceptView");
+    renderSidebar();
+    renderConceptStep();
+  }
+
+  function miniTableHtml(name, v, hitMode) {
+    const t = MINI_TABLES[name];
+    const hl = v.highlight || {};
+    const keyIcon = (col) => !v.keys ? "" : col === t.columns[0] ? " 🔑" : (col === "user_id" && name !== "users" ? " 🔗" : "");
+    const head = t.columns.map((c, ci) => {
+      const cls = hl.col === c ? "hl" : "";
+      return `<th class="${cls}" data-table="${name}" data-col="${c}"${hitMode ? " data-hit" : ""}>${c}${keyIcon(c)}${v.showTypes ? `<small>${t.types[ci]}</small>` : ""}</th>`;
+    }).join("");
+    const body = t.rows.map((r, ri) => {
+      const rowCls = hl.row === ri ? "hl" : "";
+      return `<tr class="${rowCls}">` + r.map((val, ci) => {
+        const c = t.columns[ci];
+        const isHl = hl.col === c || (hl.cell && hl.cell[0] === ri && hl.cell[1] === c);
+        const isNull = val === null;
+        return `<td class="${isHl ? "hl" : ""}${isNull ? " null" : ""}" data-table="${name}" data-row="${ri}" data-col="${c}"${hitMode ? " data-hit" : ""}>${isNull ? "NULL" : esc(val)}</td>`;
+      }).join("") + "</tr>";
+    }).join("");
+    return `<div class="mini"><div class="mini-name">${t.emoji} ${name}</div>
+      <div class="mini-scroll"><table class="mini-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>
+      ${v.label ? `<div class="mini-label">${v.label}</div>` : ""}</div>`;
+  }
+
+  function visualHtml(step) {
+    const v = step.visual;
+    const tapping = step.kind === "tap" && !step.tokens;
+    if (step.tokens) {
+      return `<div class="tokens">${step.tokens.map((t, i) => `<button class="token" data-hit data-token="${i}">${esc(t)}</button>`).join("")}</div>`;
+    }
+    if (!v) return "";
+    if (v.mode === "cards") {
+      return `<div class="cards">${v.tables.map((n) => {
+        const t = MINI_TABLES[n];
+        return `<button class="tcard" data-table="${n}" ${tapping ? "data-hit" : "disabled"}>
+          <span class="tcard-emoji">${t.emoji}</span><b>${n}</b><span class="muted">${t.blurb}</span>
+          <span class="tcard-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></button>`;
+      }).join("")}</div>`;
+    }
+    if (v.schema) {
+      return `<div class="schema-map">${v.schema.map((n) => {
+        const t = MINI_TABLES[n];
+        return `<div class="sbox"><div class="sbox-head">${t.emoji} ${n}</div>${t.columns.map((c, ci) => {
+          const icon = ci === 0 ? "🔑" : c === "user_id" ? "🔗" : "";
+          return `<div class="scol" data-table="${n}" data-col="${c}"${tapping ? " data-hit" : ""}><span>${icon} ${c}</span><small>${t.types[ci]}</small></div>`;
+        }).join("")}</div>`;
+      }).join("")}</div><div class="muted small">🔑 primary key · 🔗 foreign key (points to users.user_id)</div>`;
+    }
+    return `<div class="minis">${v.tables.map((n) => miniTableHtml(n, v, tapping)).join("")}</div>` +
+      (v.keys ? `<div class="muted small">🔑 primary key · 🔗 foreign key (points to users.user_id)</div>` : "");
+  }
+
+  function renderConceptStep() {
+    const steps = current.steps;
+    $("cProgressFill").style.width = Math.round((100 * cDoneCount) / steps.length) + "%";
+    if (!cQueue.length) return renderConceptDone();
+    const step = steps[cQueue[0]];
+    cState = { step, answered: false };
+    const card = $("cCard");
+    let html = "";
+    if (step.kind === "learn") {
+      html = `<div class="c-tag">Learn</div><div class="explain">${step.html}</div>${visualHtml(step)}`;
+    } else if (step.kind === "tap") {
+      html = `<div class="c-tag quiz">Quick quiz · tap it</div><div class="c-prompt">${step.prompt}</div>${visualHtml(step)}`;
+    } else {
+      html = `<div class="c-tag quiz">Quick quiz</div><div class="c-prompt">${step.prompt}</div>${visualHtml(step)}
+        <div class="options">${step.options.map((o, i) => `<button class="option${step.mono ? " mono" : ""}" data-hit data-option="${i}">${esc(o)}</button>`).join("")}</div>`;
+    }
+    card.innerHTML = html;
+    card.classList.remove("pop");
+    void card.offsetWidth;
+    card.classList.add("pop");
+    const bar = $("cBar");
+    bar.className = "c-bar";
+    $("cMsg").innerHTML = step.kind === "learn" ? "" : `<span class="muted">${step.kind === "tap" ? "Tap your answer above" : "Pick one answer"}</span>`;
+    $("cContinue").hidden = step.kind !== "learn";
+    $("cContinue").textContent = "Continue";
+    card.querySelectorAll("[data-hit]").forEach((el) => el.addEventListener("click", () => onConceptHit(el)));
+  }
+
+  function isHitCorrect(step, el) {
+    const t = step.target;
+    if (step.kind === "choice") return Number(el.dataset.option) === step.answer;
+    switch (t.type) {
+      case "table": return el.dataset.table === t.name;
+      case "token": return Number(el.dataset.token) === t.index;
+      case "row": return el.dataset.table === t.table && Number(el.dataset.row) === t.row;
+      case "col": return el.dataset.table === t.table && el.dataset.col === t.col;
+      case "cell": return el.dataset.table === t.table && Number(el.dataset.row) === t.row && el.dataset.col === t.col;
+    }
+    return false;
+  }
+
+  function markEl(el, cls) {
+    // Light up the whole row / column the learner was asked about, not just one cell.
+    const t = cState.step.target;
+    const card = $("cCard");
+    let els = [el];
+    if (t && t.type === "row" && el.closest("tr")) els = [el.closest("tr")];
+    if (t && t.type === "col" && el.dataset.col && cls === "right") {
+      els = [...card.querySelectorAll(`[data-table="${el.dataset.table}"][data-col="${el.dataset.col}"]`)];
+    }
+    els.forEach((e) => { e.classList.remove("right", "wrong"); void e.offsetWidth; e.classList.add(cls); });
+  }
+
+  function onConceptHit(el) {
+    if (!cState || cState.answered) return;
+    const step = cState.step;
+    const ok = isHitCorrect(step, el);
+    cState.answered = true;
+    cState.correct = ok;
+    markEl(el, ok ? "right" : "wrong");
+    if (!ok && step.kind === "choice") {
+      const good = $("cCard").querySelector(`[data-option="${step.answer}"]`);
+      good && good.classList.add("right");
+    }
+    if (!ok) cMistakes++;
+    const bar = $("cBar");
+    bar.className = "c-bar " + (ok ? "ok" : "bad");
+    $("cMsg").innerHTML = ok
+      ? `<b>✓</b> ${step.right || "Correct!"}`
+      : `<b>Not quite.</b> ${step.wrong || step.right || ""}${step.kind === "choice" ? "" : " We'll come back to this one."}`;
+    $("cContinue").hidden = false;
+    $("cContinue").textContent = ok ? "Continue" : "Got it";
+    $("cContinue").focus({ preventScroll: true });
+  }
+
+  function onConceptContinue() {
+    if (!cQueue.length) {
+      const n = lessons[idx(current) + 1];
+      if (n) location.hash = "lesson/" + n.id;
+      return;
+    }
+    const step = cState.step;
+    if (step.kind !== "learn" && !cState.answered) return;
+    const i = cQueue.shift();
+    if (step.kind === "learn" || cState.correct) cDoneCount++;
+    else cQueue.push(i); // Duolingo-style: missed questions come back at the end
+    renderConceptStep();
+  }
+
+  function renderConceptDone() {
+    const first = !state.done[current.id];
+    state.done[current.id] = true;
+    saveState();
+    renderSidebar();
+    const next = lessons[idx(current) + 1];
+    const levelFinished = first && levelDone(current.levelIndex);
+    $("cCard").innerHTML = `<div class="c-done">
+      <div class="c-done-emoji">${levelFinished ? "🏆" : "🎉"}</div>
+      <h2>${levelFinished ? "Basics complete!" : "Lesson complete!"}</h2>
+      <p>${cMistakes === 0 ? "Perfect, no mistakes!" : `You fixed ${cMistakes} mistake${cMistakes === 1 ? "" : "s"} along the way. That's how learning works.`}</p>
+      ${levelFinished ? "<p>You know the vocabulary now. Next you'll write your first real SQL query.</p>" : ""}
+    </div>`;
+    $("cBar").className = "c-bar ok";
+    $("cMsg").innerHTML = "";
+    $("cContinue").hidden = !next;
+    $("cContinue").textContent = next ? (next.type === "concept" ? "Next lesson" : "Start writing SQL →") : "";
+  }
+
   // ---------- Editor niceties ----------
   function wireEditor(textarea, onEnter, onChange) {
     textarea.addEventListener("keydown", (e) => {
@@ -318,7 +494,7 @@
       lesson = firstOpenLesson();
       history.replaceState(null, "", "#lesson/" + lesson.id);
     }
-    if (force || !current || current.id !== lesson.id || $("lessonView").hidden) openLesson(lesson);
+    if (force || !current || current.id !== lesson.id || ($("lessonView").hidden && $("conceptView").hidden)) openLesson(lesson);
   }
 
   // ---------- Boot ----------
@@ -350,6 +526,13 @@
       saveState();
       $("results").innerHTML = "";
       $("feedback").hidden = true;
+    });
+    $("cContinue").addEventListener("click", onConceptContinue);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !$("conceptView").hidden && !$("cContinue").hidden && document.activeElement !== $("cContinue")) {
+        e.preventDefault();
+        onConceptContinue();
+      }
     });
     $("prevBtn").addEventListener("click", () => { const p = lessons[idx(current) - 1]; if (p) location.hash = "lesson/" + p.id; });
     $("nextBtn").addEventListener("click", () => { const n = lessons[idx(current) + 1]; if (n) location.hash = "lesson/" + n.id; });
